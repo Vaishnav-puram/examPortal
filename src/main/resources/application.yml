@@ -1,0 +1,13 @@
+spring:
+  mail:
+      host: smtp.gmail.com
+      username: iacsd.examportal@gmail.com
+      password: alivstekgscbstmd
+      sub: "IACSD"
+      port: 587
+      properties:
+        mail:
+          smtp:
+            starttls:
+              enable: true
+            auth: true
