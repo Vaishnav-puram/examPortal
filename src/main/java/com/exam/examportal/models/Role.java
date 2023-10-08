@@ -13,6 +13,7 @@ import java.util.Set;
 @Setter
 public class Role {
     public Role() {
+        this.userRoles = new HashSet<>();
     }
 
     public Role(int rid, String role) {
