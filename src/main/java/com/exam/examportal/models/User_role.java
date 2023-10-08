@@ -13,8 +13,33 @@ public class User_role {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int urid;
 
+    public int getUrid() {
+        return urid;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
     @ManyToOne(fetch = FetchType.EAGER)
     private User user;
+
+    public void setUrid(int urid) {
+        this.urid = urid;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Role role;
 
