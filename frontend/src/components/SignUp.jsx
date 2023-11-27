@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import { useState, useEffect } from "react";
 import { signUp } from "../services/User_Service";
 import { toast } from 'react-toastify';
+import "../index.css"
 function SignUp() {
     //initializng userData obj
     let [userData, setUserData] = useState({
@@ -133,25 +134,25 @@ function SignUp() {
                         <Form >
                             <FormGroup>
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter username" name="uname" value={userData.username} onChange={(e) => handleChange(e, 'username')} />
+                                <Form.Control id="uForm" type="text" placeholder="Enter username" name="uname" value={userData.username} onChange={(e) => handleChange(e, 'username')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Firstname</Form.Label>
-                                <Form.Control type="text" placeholder="Enter firstname" name="fname" value={userData.firstname} onChange={(e) => handleChange(e, 'firstname')} />
+                                <Form.Control id="fForm" type="text" placeholder="Enter firstname" name="fname" value={userData.firstname} onChange={(e) => handleChange(e, 'firstname')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Lastname</Form.Label>
-                                <Form.Control type="text" placeholder="Enter lastname" name="lname" value={userData.lastname} onChange={(e) => handleChange(e, 'lastname')} />
+                                <Form.Control id="lForm" type="text" placeholder="Enter lastname" name="lname" value={userData.lastname} onChange={(e) => handleChange(e, 'lastname')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" name="email" value={userData.email} onChange={(e) => handleChange(e, 'email')} />
+                                <Form.Control id="eForm" type="email" placeholder="Enter email" name="email" value={userData.email} onChange={(e) => handleChange(e, 'email')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Enter password" name="password" value={userData.password} onChange={(e) => handleChange(e, 'password')} />
+                                <Form.Control id="pForm" type="password" placeholder="Enter password" name="password" value={userData.password} onChange={(e) => handleChange(e, 'password')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Age</Form.Label>
-                                <Form.Control type="number" placeholder="Enter age" name="age" value={userData.age} onChange={(e) => handleChange(e, 'age')} />
+                                <Form.Control id="aForm" type="number" placeholder="Enter age" name="age" value={userData.age} onChange={(e) => handleChange(e, 'age')} />
                                 <br />
                                 <Form.Label>Mobile</Form.Label>
-                                <Form.Control type="text" placeholder="Enter phno." name="mobile" value={userData.mobile} onChange={(e) => handleChange(e, 'mobile')} />
+                                <Form.Control id="mForm" type="text" placeholder="Enter phno." name="mobile" value={userData.mobile} onChange={(e) => handleChange(e, 'mobile')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}>{err.errMobile}</span><br />
 
                             </FormGroup>
