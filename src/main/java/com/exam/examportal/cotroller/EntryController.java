@@ -18,6 +18,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/exam")
+@CrossOrigin("*")
 public class EntryController {
     @Autowired
     UserService userService;
@@ -30,7 +31,7 @@ public class EntryController {
 
         Role role=new Role();
         role.setRid(124);
-        role.setRole("ADMIN");
+        role.setRole("NORMAL");
         User_role userRole=new User_role();
         userRole.setUser(user);
         userRole.setRole(role);
