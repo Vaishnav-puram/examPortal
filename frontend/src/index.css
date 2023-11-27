@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media only screen and (max-width: 600px) {
+    /* Styles for small screens (e.g., mobile) */
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 16px;
+  }
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
+  
+  li {
+    float: left;
+  }
+  
+  li {
+    font-size: 20px;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+  
+  li :hover:not(.active) {
+    background-color: #111;
+  }
+  
+  .active {
+    background-color: #04AA6D;
+  }
+  #loginBtn,#signupBtn{
+    text-align: center;
+    color: white;
+    padding: 14px 16px;
+    font-size: 20px;
+    text-decoration: none;
+  }
+#uForm,#fForm,#lForm,#eForm,#pForm,#aForm,#mForm{
+    font-size: small;
+}
+
+#email,#pass{
+    font-size: medium;
+    background-color: beige;
+}
