@@ -3,7 +3,9 @@ import { CardBody, Container, FormGroup } from "reactstrap";
 import { Card, CardHeader } from "reactstrap";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
+import { signUp } from "../services/User_Service";
+import { toast } from 'react-toastify';
 function SignUp() {
     //initializng userData obj
     let [userData, setUserData] = useState({
@@ -16,25 +18,58 @@ function SignUp() {
         age: "",
         profile: ""
     })
+    let [err, setErr] = useState({
+        errPass: "",
+        errEmail: "",
+        errUname: "",
+        errFname: "",
+        errLname: "",
+        errMobile: "",
+    })
     //calls whenever the userData obj gets changed
-    useEffect(()=>{
+    useEffect(() => {
         console.log(userData);
-    },[userData])
+    }, [userData])
+    useEffect(() => {
+        console.log(err);
+    }, [err]);
     //one function to update all properties of userData object
-    const handleChange = (event,property) => {
-        setUserData({...userData,[property]:event.target.value});
+    const handleChange = (event, property) => {
+        setUserData({ ...userData, [property]: event.target.value });
     }
 
     //submit form action
-    const submit_Form=(event)=>{
+    const submit_Form = (event) => {
         //preventing the default behavior of submit action 
         event.preventDefault();
+        console.log(userData);
         //validate the data (properties of userData)
+        validateMobile(userData.mobile);
+        validatePassword(userData.password);
 
         //call server api-request of create-user
+        signUp(userData).then((data)=>{
+            console.log(data);
+            console.log("logged in successfully!");
+            toast.success("user logged in successfully");
+        }).catch((err)=>{
+            console.log(err);
+            toast.error("login failed")
+        });
+        setUserData({
+        username: "",
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        mobile: "",
+        age: "",
+        profile: ""
+        }
+        )
     }
-    //reset the form fields
-    const reset=()=>{
+    //reset the form fields and also resetting the error messages
+    const reset = () => {
         setUserData({
             username: "",
             firstname: "",
@@ -45,6 +80,27 @@ function SignUp() {
             age: "",
             profile: ""
         })
+        setErr({ ...err, errPass: "" });
+    }
+    function validateMobile(mob) {
+        console.log("mobile entered", mob);
+        console.log(mob.length);
+
+        setErr((err) => {
+            if (mob.lenngth < 10 || mob.length > 10) {
+                return {...err, errMobile: "Mobile no. should be 10 digits !"};
+            } else {
+                return { ...err, errMobile: "" };
+            }
+        });
+    }
+    function validatePassword(pass) {
+        if (pass.length < 6) {
+            setErr({ ...err, errPass: "Password should'nt be less than 6!" });
+        } else {
+            setErr({ ...err, errPass: "" });
+        }
+
     }
     // const handleFname = (event) => {
     //     setUserData({...userData,firstname: event.target.value});
@@ -64,7 +120,6 @@ function SignUp() {
     // const handleMobile = (event) => {
     //     setUserData({...userData,mobile :event.target.value});
     // }
-
     console.log(userData.username);
     return (
         <>
@@ -78,19 +133,26 @@ function SignUp() {
                         <Form >
                             <FormGroup>
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" placeholder="Enter username" name="uname" value={userData.username} onChange={(e)=>handleChange(e,'username')} />
+                                <Form.Control type="text" placeholder="Enter username" name="uname" value={userData.username} onChange={(e) => handleChange(e, 'username')} />
+                                <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Firstname</Form.Label>
-                                <Form.Control type="text" placeholder="Enter firstname" name="fname" value={userData.firstname} onChange={(e)=>handleChange(e,'firstname')} />
+                                <Form.Control type="text" placeholder="Enter firstname" name="fname" value={userData.firstname} onChange={(e) => handleChange(e, 'firstname')} />
+                                <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Lastname</Form.Label>
-                                <Form.Control type="text" placeholder="Enter lastname" name="lname" value={userData.lastname} onChange={(e)=>handleChange(e,'lastname')} />
+                                <Form.Control type="text" placeholder="Enter lastname" name="lname" value={userData.lastname} onChange={(e) => handleChange(e, 'lastname')} />
+                                <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="Enter email" name="email" value={userData.email} onChange={(e)=>handleChange(e,'email')} />
+                                <Form.Control type="email" placeholder="Enter email" name="email" value={userData.email} onChange={(e) => handleChange(e, 'email')} />
+                                <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Password</Form.Label>
-                                <Form.Control type="password" placeholder="Enter password" name="password" value={userData.password} onChange={(e)=>handleChange(e,'password')} />
+                                <Form.Control type="password" placeholder="Enter password" name="password" value={userData.password} onChange={(e) => handleChange(e, 'password')} />
+                                <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Age</Form.Label>
-                                <Form.Control type="number" placeholder="Enter age" name="age" value={userData.age} onChange={(e)=>handleChange(e,'age')} />
+                                <Form.Control type="number" placeholder="Enter age" name="age" value={userData.age} onChange={(e) => handleChange(e, 'age')} />
+                                <br />
                                 <Form.Label>Mobile</Form.Label>
-                                <Form.Control type="text" placeholder="Enter phno." name="mobile" value={userData.mobile} onChange={(e)=>handleChange(e,'mobile')} />
+                                <Form.Control type="text" placeholder="Enter phno." name="mobile" value={userData.mobile} onChange={(e) => handleChange(e, 'mobile')} />
+                                <span style={{ color: 'red', fontSize: 'small' }}>{err.errMobile}</span><br />
 
                             </FormGroup>
                             <Container className="text-center">
