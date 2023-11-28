@@ -10,7 +10,7 @@ import "../index.css"
 function SignUp() {
     //initializng userData obj
     let [userData, setUserData] = useState({
-        username: "",
+        rollno: "",
         firstname: "",
         lastname: "",
         email: "",
@@ -58,7 +58,7 @@ function SignUp() {
             toast.error("login failed")
         });
         setUserData({
-        username: "",
+        rollno: "",
         firstname: "",
         lastname: "",
         email: "",
@@ -72,7 +72,7 @@ function SignUp() {
     //reset the form fields and also resetting the error messages
     const reset = () => {
         setUserData({
-            username: "",
+            rollno: "",
             firstname: "",
             lastname: "",
             email: "",
@@ -121,7 +121,7 @@ function SignUp() {
     // const handleMobile = (event) => {
     //     setUserData({...userData,mobile :event.target.value});
     // }
-    console.log(userData.username);
+    console.log(userData.rollno);
     return (
         <>
             <Header />
@@ -133,8 +133,8 @@ function SignUp() {
                     <CardBody style={{ color: 'black' }}>
                         <Form >
                             <FormGroup>
-                                <Form.Label>Username</Form.Label>
-                                <Form.Control id="uForm" type="text" placeholder="Enter username" name="uname" value={userData.username} onChange={(e) => handleChange(e, 'username')} />
+                                <Form.Label>rollno</Form.Label>
+                                <Form.Control id="uForm" type="text" placeholder="Enter rollno" name="uname" value={userData.rollno} onChange={(e) => handleChange(e, 'rollno')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
                                 <Form.Label>Firstname</Form.Label>
                                 <Form.Control id="fForm" type="text" placeholder="Enter firstname" name="fname" value={userData.firstname} onChange={(e) => handleChange(e, 'firstname')} />
