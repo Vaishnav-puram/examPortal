@@ -17,9 +17,9 @@
             this.userRoles = new HashSet<>();
         }
 
-        public User(int id, String username, String firstname, String lastname, String email, String password, long mobile, Set<User_role> userRoles, int age, String profile, boolean enable) {
+        public User(int id, String rollno, String firstname, String lastname, String email, String password, long mobile, Set<User_role> userRoles, int age, String profile, boolean enable) {
             this.id = id;
-            this.username = username;
+            this.rollno = rollno;
             this.firstname = firstname;
             this.lastname = lastname;
             this.email = email;
@@ -35,8 +35,8 @@
             this.id = id;
         }
 
-        public void setUsername(String username) {
-            this.username = username;
+        public void setRollno(String rollno) {
+            this.rollno = rollno;
         }
 
         public void setFirstname(String firstname) {
@@ -66,7 +66,7 @@
         @Id
         @GeneratedValue(strategy = GenerationType.SEQUENCE)
         private int id;
-        private String username;
+        private String rollno;
         private String firstname;
         private String lastname;
         private String email;
@@ -112,8 +112,8 @@
             return id;
         }
 
-        public String getUsername() {
-            return username;
+        public String getRollno() {
+            return rollno;
         }
 
         public String getFirstname() {
