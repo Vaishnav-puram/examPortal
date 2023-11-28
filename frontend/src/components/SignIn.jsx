@@ -28,7 +28,7 @@ function SignIn(){
                         </Container>
                     </Form>
                     <Container className="text-center">
-                            Not a member ? <Link>Register</Link>
+                           <div> Not a member ? <Link>Register</Link> </div>
                     </Container>
                 </CardBody>
                
