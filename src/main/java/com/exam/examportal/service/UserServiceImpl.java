@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService{
     RoleRepo roleRepo;
     @Override
     public User createUser(User user, Set<User_role> userRoles) throws UserAlreadyExists {
-        User u=userRepo.findByUsername(user.getUsername());
+        User u=userRepo.findByRollno(user.getRollno());
         User uemail=userRepo.findByEmail(user.getEmail());
         User u1;
         if (u!=null||uemail!=null){
