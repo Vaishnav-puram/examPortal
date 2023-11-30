@@ -4,8 +4,36 @@ import { Card, CardHeader } from "reactstrap";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { Link } from "react-router-dom";
+import { useState,useEffect } from "react";
 import "../index.css"
+import { signin } from "../services/User_Service";
+import { toast } from 'react-toastify';
 function SignIn(){
+    let [userData, setUserData] = useState({
+        rollno:"",
+        password:""
+    });
+    const handleChange=(event,property)=>{
+        setUserData({...userData,[property]:event.target.value});
+    }
+    useEffect(() => {
+        console.log(userData);
+    }, [userData])
+    const login=(event)=>{
+        event.preventDefault();
+        signin(userData).then((data)=>{
+            console.log(data);
+            console.log("logged in successfully!");
+            toast.success("user logged in successfully");
+        }).catch((err)=>{
+            console.log(err);
+            toast.error("login failed")
+        });
+        setUserData({
+            rollno:"",
+            password:""
+        })
+    }
     return(
         <>
         <Header/>
@@ -17,13 +45,13 @@ function SignIn(){
                 <CardBody>
                     <Form>
                         <FormGroup>
-                            <Form.Label>Email address</Form.Label>
-                            <Form.Control id="email" type="email" placeholder="Enter email" style={{fontSize:'small'}} />
+                            <Form.Label>Rollno</Form.Label>
+                            <Form.Control id="rollno" type="text" placeholder="Enter rollno" style={{fontSize:'small'}} value={userData.rollno} onChange={(e)=>handleChange(e,'rollno')}/>
                             <Form.Label>Password</Form.Label>
-                            <Form.Control id="pass" type="password" placeholder="Enter password" style={{fontSize:'small'}} />
+                            <Form.Control id="pass" type="password" placeholder="Enter password" style={{fontSize:'small'}} value={userData.password}  onChange={(e)=>handleChange(e,'password')}/>
                         </FormGroup>
                         <Container className="text-center">
-                        <Button  variant="dark" style={{fontSize:'medium'}}>Login</Button>
+                        <Button type="submit" variant="dark" style={{fontSize:'medium'}} onClick={login}>Login</Button>
                         <a href="" className="ms-4">Forgot password ?</a>
                         </Container>
                     </Form>
