@@ -1,5 +1,6 @@
 package com.exam.examportal.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -26,6 +27,7 @@ public class Role {
     private int rid;
     private String role;
     @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "role")
+    @JsonIgnore
     private Set<User_role> userRoles=new HashSet<>();
 
     public Set<User_role> getUserRoles() {
