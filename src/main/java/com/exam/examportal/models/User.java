@@ -4,7 +4,11 @@
     import jakarta.persistence.*;
     import lombok.Getter;
     import lombok.Setter;
+//    import org.hibernate.Hibernate;
+//    import org.springframework.security.core.GrantedAuthority;
+//    import org.springframework.security.core.userdetails.UserDetails;
 
+    import java.util.Collection;
     import java.util.HashSet;
     import java.util.Set;
 
@@ -29,6 +33,7 @@
             this.age = age;
             this.profile = profile;
             this.enable = enable;
+
         }
 
         public void setId(int id) {
@@ -75,7 +80,7 @@
 
         @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "user")
         @JsonIgnore
-        private Set<User_role> userRoles =new HashSet<>();
+        private Set<User_role> userRoles;
 
         public void setProfile(String profile) {
             this.profile = profile;
@@ -107,7 +112,7 @@
 
         private boolean enable=true;
 
-
+        private String role;
         public int getId() {
             return id;
         }
@@ -139,4 +144,12 @@
         public int getAge() {
             return age;
         }
+
+//        public String getRole() {
+//            if (userRoles != null && !userRoles.isEmpty()) {
+//                // Assuming each User_role entity has a field named 'role'
+//                return userRoles.iterator().next().getRole().toString();
+//            }
+//            return null; // or return a default role if userRoles is empty
+//        }
     }
