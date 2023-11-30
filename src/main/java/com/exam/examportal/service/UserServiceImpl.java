@@ -1,9 +1,14 @@
 package com.exam.examportal.service;
 
+import com.exam.examportal.exceptions.FacultyAlreadyExists;
+import com.exam.examportal.exceptions.FacultyNotFound;
 import com.exam.examportal.exceptions.UserAlreadyExists;
 import com.exam.examportal.exceptions.UserNotFound;
+import com.exam.examportal.models.Faculty;
+import com.exam.examportal.models.Role;
 import com.exam.examportal.models.User;
 import com.exam.examportal.models.User_role;
+import com.exam.examportal.repo.FacultyRepo;
 import com.exam.examportal.repo.RoleRepo;
 import com.exam.examportal.repo.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +22,8 @@ public class UserServiceImpl implements UserService{
     UserRepo userRepo;
     @Autowired
     RoleRepo roleRepo;
+    @Autowired
+    FacultyRepo facultyRepo;
     @Override
     public User createUser(User user, Set<User_role> userRoles) throws UserAlreadyExists {
         User u=userRepo.findByRollno(user.getRollno());
@@ -46,5 +53,54 @@ public class UserServiceImpl implements UserService{
             userRepo.save(u);
         }
         return "Password updated successfully.";
+    }
+
+    @Override
+    public User getUser(String rollno) {
+        return userRepo.findByRollno(rollno);
+    }
+
+    @Override
+    public Role getRole(int rid) {
+        return roleRepo.findById(rid);
+    }
+
+    @Override
+    public String authenticateCred(String rollno, String password) {
+        User u=userRepo.findByRollno(rollno);
+        if (u!=null&&u.getPassword().equals(password)){
+            String role =roleRepo.findById(u.getId()).getRole();
+            System.out.println("----------> logged in as --------->: "+role);
+            return role;
+        }
+        return "";
+    }
+
+
+    @Override
+    public Faculty createFaculty(Faculty faculty) throws FacultyAlreadyExists {
+        Faculty f=facultyRepo.findByEmail(faculty.getEmail());
+        if (f!=null){
+            throw new FacultyAlreadyExists("Faculty already exists !");
+        }
+        return facultyRepo.save(faculty);
+    }
+    @Override
+    public Faculty getFaculty(String email) throws FacultyNotFound{
+        Faculty f=facultyRepo.findByEmail(email);
+        if (f==null){
+            throw new FacultyNotFound("No Faculty Found!");
+        }
+        return f;
+    }
+
+    @Override
+    public boolean authenticateCredFaculty(String email, String password) {
+        Faculty f=facultyRepo.findByEmail(email);
+        if (f!=null&&f.getPassword().equals(password)){
+            System.out.println("Logged in successful");
+            return true;
+        }
+        return false;
     }
 }
