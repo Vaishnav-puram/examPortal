@@ -1,7 +1,10 @@
 package com.exam.examportal.cotroller;
 
+import com.exam.examportal.exceptions.FacultyAlreadyExists;
+import com.exam.examportal.exceptions.FacultyNotFound;
 import com.exam.examportal.exceptions.UserAlreadyExists;
 import com.exam.examportal.exceptions.UserNotFound;
+import com.exam.examportal.models.Faculty;
 import com.exam.examportal.models.Role;
 import com.exam.examportal.models.User;
 import com.exam.examportal.models.User_role;
@@ -25,6 +28,23 @@ public class EntryController {
     @Autowired
     EmailService emailService;
 
+    @GetMapping("/user/{rollno}")
+    public User getUser(@PathVariable String rollno)throws UserNotFound{
+        return userService.getUser(rollno);
+    }
+
+    @GetMapping("/login/{rollno}")
+    public String getUserById(@PathVariable String rollno, @RequestParam String password) {
+        return userService.authenticateCred(rollno,password);
+    }
+    @GetMapping("/login/faculty/{email}")
+    public boolean getFacultyByEmail(@PathVariable String email,@RequestParam String password){
+        return userService.authenticateCredFaculty(email,password);
+    }
+    @GetMapping("/userRole/{rid}")
+    public Role getRole(@PathVariable int rid)throws UserNotFound{
+        return userService.getRole(rid);
+    }
 
     @PostMapping("/create")
     public User createUser(@RequestBody User user) throws UserAlreadyExists {
@@ -38,6 +58,15 @@ public class EntryController {
         Set<User_role> user_roles=new HashSet<>();
         user_roles.add(userRole);
         return userService.createUser(user,user_roles);
+    }
+
+    @PostMapping("/create/faculty")
+    public Faculty createFaculty(@RequestBody Faculty faculty)throws FacultyAlreadyExists {
+        return userService.createFaculty(faculty);
+    }
+    @GetMapping("/faculty/{email}")
+    public Faculty getFaculty(@PathVariable String email)throws FacultyNotFound{
+        return userService.getFaculty(email);
     }
 
     @GetMapping("/sendMail")
