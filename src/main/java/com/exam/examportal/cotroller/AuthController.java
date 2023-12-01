@@ -4,6 +4,7 @@ package com.exam.examportal.cotroller;
 import com.exam.examportal.exceptions.UserNotFound;
 import com.exam.examportal.models.JWTRequest;
 import com.exam.examportal.models.JWTResponse;
+import com.exam.examportal.models.User;
 import com.exam.examportal.security.JWTHelper;
 import com.exam.examportal.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,9 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @CrossOrigin("*")
@@ -52,5 +52,9 @@ public class AuthController {
         }catch (BadCredentialsException e){
             throw new Exception("Invalid credentials"+e.getMessage());
         }
+    }
+    @GetMapping("/exam/currentUser")
+    public User getCurrentUser(Principal pricipal){
+        return (User)userDetailsService.loadUserByUsername(pricipal.getName());
     }
 }
