@@ -26,7 +26,7 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int rid;
     private String role;
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY,mappedBy = "role")
+    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "role")
     @JsonIgnore
     private Set<User_role> userRoles=new HashSet<>();
 
