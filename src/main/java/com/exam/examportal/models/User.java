@@ -4,6 +4,8 @@
     import jakarta.persistence.*;
     import lombok.Getter;
     import lombok.Setter;
+    import org.springframework.security.core.GrantedAuthority;
+    import org.springframework.security.core.userdetails.UserDetails;
 //    import org.hibernate.Hibernate;
 //    import org.springframework.security.core.GrantedAuthority;
 //    import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +18,7 @@
     @Table(name = "users")
     @Getter
     @Setter
-    public class User {
+    public class User implements UserDetails {
         public User() {
             this.userRoles = new HashSet<>();
         }
@@ -133,8 +135,40 @@
             return email;
         }
 
+        @Override
+        public Collection<? extends GrantedAuthority> getAuthorities() {
+            Set<Authority> set=new HashSet<>();
+            this.userRoles.forEach(userRole -> set.add(new Authority(userRole.getRole().getRole())));
+            return set;
+        }
+
         public String getPassword() {
             return password;
+        }
+
+        @Override
+        public String getUsername() {
+            return rollno;
+        }
+
+        @Override
+        public boolean isAccountNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isAccountNonLocked() {
+            return true;
+        }
+
+        @Override
+        public boolean isCredentialsNonExpired() {
+            return true;
+        }
+
+        @Override
+        public boolean isEnabled() {
+            return true;
         }
 
         public long getMobile() {
