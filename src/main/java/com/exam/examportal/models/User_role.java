@@ -40,7 +40,7 @@ public class User_role {
         this.role = role;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 
 }
