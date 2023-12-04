@@ -12,6 +12,7 @@ import com.exam.examportal.service.EmailService;
 import com.exam.examportal.service.UserService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -27,6 +28,9 @@ public class EntryController {
     UserService userService;
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    BCryptPasswordEncoder passwordEncoder;
 
     @GetMapping("/user/{rollno}")
     public User getUser(@PathVariable String rollno)throws UserNotFound{
@@ -49,6 +53,7 @@ public class EntryController {
     @PostMapping("/create")
     public User createUser(@RequestBody User user) throws UserAlreadyExists {
 
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
         Role role=new Role();
         role.setRid(124);
         role.setRole("NORMAL");
