@@ -39,7 +39,7 @@ ul {
   .active {
     background-color: #04AA6D;
   }
-  #loginBtn,#signupBtn{
+  #loginBtn,#signupBtn,#registered{
     text-align: center;
     color: white;
     padding: 14px 16px;
