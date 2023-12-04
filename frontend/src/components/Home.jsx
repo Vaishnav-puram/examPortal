@@ -1,6 +1,4 @@
 import Header from "./Header";
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
 import { NavLink } from "react-router-dom";
 import "../index.css"
 function Home() {
