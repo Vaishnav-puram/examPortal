@@ -16,12 +16,16 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.security.Principal;
 
 @RestController
 @CrossOrigin("*")
 public class AuthController {
+    private Logger logger = LoggerFactory.getLogger(OncePerRequestFilter.class);
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -54,7 +58,10 @@ public class AuthController {
         }
     }
     @GetMapping("/exam/currentUser")
-    public User getCurrentUser(Principal pricipal){
-        return (User)userDetailsService.loadUserByUsername(pricipal.getName());
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<User> getCurrentUser(Principal pricipal){
+        logger.info("inside currentUser");
+        User user=(User)userDetailsService.loadUserByUsername(pricipal.getName());
+        return ResponseEntity.ok(user);
     }
 }
