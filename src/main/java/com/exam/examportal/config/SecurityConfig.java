@@ -52,8 +52,8 @@ public class SecurityConfig {
     JWTAuthenticationFilter filter;
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
     public UserDetailsService userDetailsService() {
