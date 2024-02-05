@@ -1,4 +1,5 @@
 import Header from "../Header"
+import { Outlet } from "react-router-dom";
 import "../../index.css"
 import Navbar from "./Navbar";
 function AdminDashBoard(){
@@ -6,7 +7,9 @@ function AdminDashBoard(){
         <>
             <Header/>
             <Navbar/>
-            <h1>Welcome to ADMIN dashboard</h1>
+            <div style={{display:'flex',justifyContent:'center',alignItems:'center',marginLeft:'240px'}}>
+                <Outlet/>
+            </div>
         </>
     )
 }

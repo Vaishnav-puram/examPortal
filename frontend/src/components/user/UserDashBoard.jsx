@@ -1,12 +1,15 @@
-import Header from "../Header";
-import Navbar from "./Navbar";
+import Header from "../Header"
+import { Outlet } from "react-router-dom";
 import "../../index.css"
+import Navbar from "./Navbar";
 function UserDashBoard(){
     return(
         <>
-        <Header/>
-        <Navbar/>
-            <h1>Welcome to USER dashboard</h1>
+            <Header/>
+            <Navbar/>
+            <div style={{display:'flex',justifyContent:'center',alignItems:'center',marginLeft:'240px'}}>
+                <Outlet/>
+            </div>
         </>
     )
 }
