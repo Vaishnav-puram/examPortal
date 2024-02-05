@@ -1,5 +1,9 @@
 package com.exam.examportal.service;
 
+import com.exam.examportal.models.User;
+import com.exam.examportal.models.UserOTP;
+import com.exam.examportal.repo.UserOtpRepo;
+import com.exam.examportal.repo.UserRepo;
 import jakarta.mail.*;
 
 import jakarta.mail.internet.MimeMessage;
@@ -18,6 +22,11 @@ public class EmailService {
     @Autowired
     OTPGenerator otpGenerator;
 
+    @Autowired
+    UserRepo userRepo;
+    @Autowired
+    UserOtpRepo userOtpRepo;
+
     @Value("${spring.mail.username}")
     private String from;
 
@@ -35,7 +44,19 @@ public class EmailService {
     public void sendOTP(String to) throws MessagingException {
         String otp = otpGenerator.generateOTP();
         String content = "Your OTP for password recovery is : " + otp;
-        mimeMessage = mailHelper.mailSender(from, to, sub, content);
+        User u=userRepo.findByRollno(to);
+        System.out.println(u.getEmail());
+        UserOTP userOTP=userOtpRepo.findByRollno(to);
+        if(userOTP==null) {
+            UserOTP userOTP1=new UserOTP();
+            userOTP1.setRollno(u.getRollno());
+            userOTP1.setOtp(otp);
+            userOtpRepo.save(userOTP1);
+        }else {
+            userOTP.setOtp(otp);
+            userOtpRepo.save(userOTP);
+        }
+        mimeMessage = mailHelper.mailSender(from, u.getEmail(), sub, content);
         javaMailSender.send(mimeMessage);
 
     }
