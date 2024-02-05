@@ -20,7 +20,35 @@ export const  tokenGetter=(user)=>{
                 return response.data
             })
 }
+export const SENDOTP=(rollno)=>{
+    return axiosService.get(`/sendOTP/${rollno}`)
+            .then((response)=>{
+                console.log("-->",response.data)
+                let msg=response.data;
+                    switchToSubmitOTP(msg)
+            }).catch((err)=>{
+                console.log(err);
+            })
+}
+function switchToSubmitOTP(msg){
+    if(msg==="OTP sent successfully"){
+        window.location.href='/submitOTP';
+    }
+}
+export const VerifyOTP=(userOTP)=>{
+    return axiosService.post('/verifyOtp',userOTP)
+        .then((response)=>{
+            console.log(" verify otp-->",response.data)
+        }).catch((err)=>console.log(err));
+}
+export const ForgetPass=(user)=>{
+    return axiosService.post('/forgetPassword',user)
+        .then((response)=>{
+            console.log(response.data)
+            return response.data
+        })
 
+}
 function switchPage(role){
     if(role=='ADMIN'){
             window.location.href='/admin-dashboard';
@@ -39,6 +67,7 @@ function getCurrentUser(){
       })
     .then(response => {
       console.log(response.data);
+      saveCurrentUser(response.data);
       var role=response.data.authorities[0].authority;
       setRole(role);
       saveUserName(response.data.firstname);
@@ -54,6 +83,9 @@ function getCurrentUser(){
 
 function saveUserName(name){
     localStorage.setItem('name',name);
+}
+function saveCurrentUser(user){
+    localStorage.setItem('currUser',JSON.stringify(user));
 }
 export const getUserName=()=>{
     return localStorage.getItem('name');
