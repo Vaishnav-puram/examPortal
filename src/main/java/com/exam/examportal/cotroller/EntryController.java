@@ -4,14 +4,13 @@ import com.exam.examportal.exceptions.FacultyAlreadyExists;
 import com.exam.examportal.exceptions.FacultyNotFound;
 import com.exam.examportal.exceptions.UserAlreadyExists;
 import com.exam.examportal.exceptions.UserNotFound;
-import com.exam.examportal.models.Faculty;
-import com.exam.examportal.models.Role;
-import com.exam.examportal.models.User;
-import com.exam.examportal.models.User_role;
+import com.exam.examportal.models.*;
 import com.exam.examportal.service.EmailService;
+import com.exam.examportal.service.UserOTPService;
 import com.exam.examportal.service.UserService;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +27,8 @@ public class EntryController {
     UserService userService;
     @Autowired
     EmailService emailService;
+    @Autowired
+    UserOTPService userOTPService;
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
@@ -80,13 +81,17 @@ public class EntryController {
 
         return "Mail sent successfully";
     }
-    @GetMapping("/sendOTP")
-    public String sendOTP(@RequestParam String to)throws MessagingException{
-        emailService.sendOTP(to);
+    @GetMapping("/sendOTP/{rollno}")
+    public String sendOTP(@PathVariable String rollno)throws MessagingException{
+        emailService.sendOTP(rollno);
         return "OTP sent successfully";
     }
-    @GetMapping("/forgetPassword")
-    public String forgetPassword(@RequestParam String email,@RequestParam String password) throws UserNotFound {
-        return userService.updatePassword(email,password);
+    @PostMapping("/verifyOtp")
+    public String verifyOTP(@RequestBody UserOTP userOTP){
+        return userOTPService.verifyOTP(userOTP);
+    }
+    @PostMapping("/forgetPassword")
+    public String forgetPassword(@RequestBody UserRollPass userRollPass) throws UserNotFound {
+        return userService.updatePassword(userRollPass.getRollno(),userRollPass.getNewPass());
     }
 }
