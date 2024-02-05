@@ -11,13 +11,19 @@ import com.exam.examportal.models.User_role;
 import com.exam.examportal.repo.FacultyRepo;
 import com.exam.examportal.repo.RoleRepo;
 import com.exam.examportal.repo.UserRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService{
+    private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
     @Autowired
     UserRepo userRepo;
     @Autowired
@@ -42,14 +48,16 @@ public class UserServiceImpl implements UserService{
         }
        return u1;
     }
-    public String updatePassword(String email,String password) throws UserNotFound {
-        User u=userRepo.findByEmail(email);
+    public String updatePassword(String rollno,String password) throws UserNotFound {
+        User u=userRepo.findByRollno(rollno);
         String str="";
         if (u==null){
             throw new UserNotFound("User not found !");
         }
         else{
+            log.info("old password"+u.getPassword());
             u.setPassword(password);
+            log.info("new password"+u.getPassword());
             userRepo.save(u);
         }
         return "Password updated successfully.";

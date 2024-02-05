@@ -16,7 +16,7 @@ import java.util.Set;
 @Service
 public interface UserService {
     public User createUser(User user, Set<User_role> userRoles) throws UserAlreadyExists;
-    public String updatePassword(String email,String password)throws UserNotFound;
+    public String updatePassword(String rollno,String password)throws UserNotFound;
 
     User getUser(String rollno);
     Role getRole(int rid);
