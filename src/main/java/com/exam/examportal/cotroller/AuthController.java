@@ -37,13 +37,13 @@ public class AuthController {
 
     @PostMapping("/exam/generate-token")
     public ResponseEntity<?> generateToken(@RequestBody JWTRequest jwtRequest) throws UserNotFound {
-        try{
-            authenticate(jwtRequest.getRollno(),jwtRequest.getPassword());
-        }catch (UserNotFound e){
-            throw new UserNotFound("User Not Found"+e.getMessage());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    //        try{
+    //            authenticate(jwtRequest.getRollno(),jwtRequest.getPassword());
+    //        }catch (UserNotFound e){
+    //            throw new UserNotFound("User Not Found"+e.getMessage());
+    //        } catch (Exception e) {
+    //            throw new RuntimeException(e);
+    //        }
         UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getRollno());
         String token=this.jwtHelper.generateToken(userDetails);
         return ResponseEntity.ok(new JWTResponse(token));
