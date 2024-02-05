@@ -67,6 +67,9 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests()
+                .requestMatchers("/exam/sendOTP/{rollno}").permitAll()
+                .requestMatchers("/exam/verifyOtp").permitAll()
+                .requestMatchers("/exam/forgetPassword/").permitAll()
                 .requestMatchers("/exam/*").permitAll().anyRequest()
                         .authenticated()
                 .and()
