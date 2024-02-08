@@ -105,7 +105,7 @@ export const getToken=()=>{
     const tokenString = localStorage.getItem('token');
     return JSON.parse(tokenString);
 }
-function getFacultyToken(){
+export const getFacultyToken=()=>{
     // return localStorage.getItem('token')
     const tokenString = localStorage.getItem('facultyToken');
     return JSON.parse(tokenString);
@@ -201,4 +201,14 @@ export const currFacultyName=()=>{
 }
 function switchFacultyPage(){
     window.location.href='/faculty-dashboard';
+}
+
+export const getQuizzesForFaculty=()=>{
+    var subject=currSubject();
+    return axiosFacultyService.get(`/getQuizBySubject/${subject}`,{
+        headers: {
+            'Authorization': `Bearer ${getFacultyToken().token}`,
+          }
+    })
+
 }
