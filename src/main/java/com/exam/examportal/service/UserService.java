@@ -23,8 +23,4 @@ public interface UserService {
 
     String authenticateCred(String rollno, String password);
 
-    Faculty createFaculty(Faculty faculty) throws FacultyAlreadyExists;
-    Faculty getFaculty(String email) throws FacultyNotFound;
-
-    boolean authenticateCredFaculty(String email, String password);
 }
