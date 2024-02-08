@@ -1,0 +1,20 @@
+.hover-text {
+    color: black;
+    background-color: white; 
+  }
+  .hover-text:hover {
+    background-color: grey;
+    justify-content: center;
+    border-radius: 50%;
+  }
+.quizText{
+    display: flex;
+    justify-content: space-between;
+}
+.quizContent{
+    margin-top: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: medium;
+}
