@@ -67,11 +67,12 @@ public class SecurityConfig {
 
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests()
+                .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .requestMatchers("/exam/sendOTP/{rollno}").permitAll()
                 .requestMatchers("/exam/verifyOtp").permitAll()
                 .requestMatchers("/exam/forgetPassword/").permitAll()
-                .requestMatchers("/exam/*").permitAll().anyRequest()
-                        .authenticated()
+                .requestMatchers("/exam/*","/faculty/*").permitAll().anyRequest()
+                .authenticated()
                 .and()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
