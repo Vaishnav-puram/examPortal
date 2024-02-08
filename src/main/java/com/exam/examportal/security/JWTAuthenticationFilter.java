@@ -9,6 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,8 +28,15 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     JWTHelper jwtHelper;
 
 
+//    @Autowired
+//    UserDetailsService userDetailsService;
+@Autowired
+@Qualifier("userDetailsServiceImpl")
+UserDetailsService userDetailsService;
+
     @Autowired
-    UserDetailsService userDetailsService;
+    @Qualifier("facultyDetailsServiceImpl")
+    UserDetailsService facultyDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -40,7 +48,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Max-Age", "3600"); // Preflight cache duration in browser
 //        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
         response.setHeader("Access-Control-Allow-Headers", "*"); // all header
-
+        logger.info("inside JWTAuthenticationFilter");
         final String requestHeader = request.getHeader("Authorization");
         //Bearer 2352345235sdfrsfgsdfsdf
         logger.info(" Header :  {}", requestHeader);
@@ -49,6 +57,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         if (requestHeader != null && requestHeader.startsWith("Bearer ")) {
             //looking good
             token = requestHeader.substring(7);
+            logger.info("token from request --> "+token);
             try {
 
                 username = this.jwtHelper.getUsernameFromToken(token);
@@ -78,7 +87,19 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
 
             //fetch user detail from username
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            String requestURI = request.getRequestURI();
+            UserDetailsService selectedUserDetailsService = null;
+            if (requestURI.contains("/exam")||requestURI.contains("/category")||requestURI.contains("/quiz")||requestURI.contains("/question")) {
+                selectedUserDetailsService = userDetailsService;
+            } else if (requestURI.contains("/faculty")) {
+                selectedUserDetailsService = facultyDetailsService;
+            }
+            UserDetails userDetails = null;
+            if (selectedUserDetailsService != null) {
+                userDetails = selectedUserDetailsService.loadUserByUsername(username);
+                // continue your authentication logic
+                logger.info("username : "+userDetails.getUsername());
+            }
             Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
             if (validateToken) {
 
