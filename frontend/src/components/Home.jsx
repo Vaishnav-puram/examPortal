@@ -1,5 +1,6 @@
 import Header from "./Header";
 import { NavLink } from "react-router-dom";
+import FacultySignIn from "./faculty/FacultySignIn";
 import "../index.css"
 function Home() {
     return (
@@ -12,6 +13,7 @@ function Home() {
                 <NavLink id="signupBtn" style={{float:'right', marginRight:'30px'}} to={'/signup'}>SignUp</NavLink>
                 <NavLink id="loginBtn" style={{float:'right', marginRight:'20px'}} to={'/signin'}>Login</NavLink>
             </ul>
+            <FacultySignIn/>
         </>
     )
 }
