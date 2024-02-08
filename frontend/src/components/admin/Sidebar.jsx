@@ -22,7 +22,7 @@ function Sidebar() {
                                 <CDBSidebarMenuItem icon="gear"><i className="bi bi-gear-wide-connected"></i>Category</CDBSidebarMenuItem>
                             </NavLink>
                             
-                            <NavLink exact to="/analytics" activeClassName="activeClicked">
+                            <NavLink to={'/admin-dashboard/categories'} activeClassName="activeClicked">
                                 <CDBSidebarMenuItem icon="chart-line">Add Category</CDBSidebarMenuItem>
                             </NavLink>
 
