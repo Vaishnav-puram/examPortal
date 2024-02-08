@@ -2,12 +2,15 @@ package com.exam.examportal.cotroller;
 
 
 import com.exam.examportal.exceptions.UserNotFound;
+import com.exam.examportal.models.FacultyJWTRequest;
 import com.exam.examportal.models.JWTRequest;
 import com.exam.examportal.models.JWTResponse;
 import com.exam.examportal.models.User;
 import com.exam.examportal.security.JWTHelper;
+import com.exam.examportal.service.FacultyDetailsServiceImpl;
 import com.exam.examportal.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +18,7 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,14 +27,19 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.security.Principal;
 
 @RestController
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class AuthController {
     private Logger logger = LoggerFactory.getLogger(OncePerRequestFilter.class);
     @Autowired
     AuthenticationManager authenticationManager;
 
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    @Qualifier("userDetailsServiceImpl")
+    UserDetailsService userDetailsService;
+
+    @Autowired
+    @Qualifier("facultyDetailsServiceImpl")
+    UserDetailsService  facultyDetailsService;
 
     @Autowired
     JWTHelper jwtHelper;
@@ -45,6 +54,13 @@ public class AuthController {
     //            throw new RuntimeException(e);
     //        }
         UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getRollno());
+        String token=this.jwtHelper.generateToken(userDetails);
+        return ResponseEntity.ok(new JWTResponse(token));
+    }
+
+    @PostMapping("/faculty/generate-token")
+    public ResponseEntity<?> generateTokenForFaculty(@RequestBody FacultyJWTRequest jwtRequest) throws UserNotFound {
+        UserDetails userDetails = facultyDetailsService.loadUserByUsername(jwtRequest.getEmail());
         String token=this.jwtHelper.generateToken(userDetails);
         return ResponseEntity.ok(new JWTResponse(token));
     }
