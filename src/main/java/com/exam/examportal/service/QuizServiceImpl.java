@@ -38,4 +38,9 @@ public class QuizServiceImpl implements QuizService{
         quiz.setQid(qid);
         quizRepo.delete(quiz);
     }
+
+    @Override
+    public Set<Quiz> findQuizBySubject(String subject) {
+        return quizRepo.findBySubject(subject);
+    }
 }
