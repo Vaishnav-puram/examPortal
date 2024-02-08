@@ -83,32 +83,4 @@ public class UserServiceImpl implements UserService{
         }
         return "";
     }
-
-
-    @Override
-    public Faculty createFaculty(Faculty faculty) throws FacultyAlreadyExists {
-        Faculty f=facultyRepo.findByEmail(faculty.getEmail());
-        if (f!=null){
-            throw new FacultyAlreadyExists("Faculty already exists !");
-        }
-        return facultyRepo.save(faculty);
-    }
-    @Override
-    public Faculty getFaculty(String email) throws FacultyNotFound{
-        Faculty f=facultyRepo.findByEmail(email);
-        if (f==null){
-            throw new FacultyNotFound("No Faculty Found!");
-        }
-        return f;
-    }
-
-    @Override
-    public boolean authenticateCredFaculty(String email, String password) {
-        Faculty f=facultyRepo.findByEmail(email);
-        if (f!=null&&f.getPassword().equals(password)){
-            System.out.println("Logged in successful");
-            return true;
-        }
-        return false;
-    }
 }
