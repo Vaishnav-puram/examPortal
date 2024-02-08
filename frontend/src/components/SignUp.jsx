@@ -158,7 +158,7 @@ function SignUp() {
                             </FormGroup>
                             <Container className="text-center">
                                 <Button type="submit" variant="dark" style={{ fontSize: 'medium' }} onClick={submit_Form}>Register</Button>
-                                <Button variant="secondary" style={{ fontSize: 'medium' }} className="ms-2" onClick={reset}>Reset</Button>
+                                <Button variant="secondary" style={{ fontSize: 'medium' }} onClick={reset}>Reset</Button>
 
                             </Container>
                         </Form>
