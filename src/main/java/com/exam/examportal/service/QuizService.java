@@ -12,4 +12,5 @@ public interface QuizService {
     Set<Quiz> getQuizzes();
     Quiz getQuizById(Long qid);
     void deleteQuiz(Long qid);
+    Set<Quiz> findQuizBySubject(String subject);
 }
