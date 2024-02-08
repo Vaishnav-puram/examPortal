@@ -21,7 +21,7 @@ import java.util.Set;
 
 @RestController
 @RequestMapping("/exam")
-@CrossOrigin("*")
+@CrossOrigin(origins = {"http://localhost:5173/"})
 public class EntryController {
     @Autowired
     UserService userService;
@@ -42,10 +42,7 @@ public class EntryController {
     public String getUserById(@PathVariable String rollno, @RequestParam String password) {
         return userService.authenticateCred(rollno,password);
     }
-    @GetMapping("/login/faculty/{email}")
-    public boolean getFacultyByEmail(@PathVariable String email,@RequestParam String password){
-        return userService.authenticateCredFaculty(email,password);
-    }
+
     @GetMapping("/userRole/{rid}")
     public Role getRole(@PathVariable int rid)throws UserNotFound{
         return userService.getRole(rid);
@@ -64,15 +61,6 @@ public class EntryController {
         Set<User_role> user_roles=new HashSet<>();
         user_roles.add(userRole);
         return userService.createUser(user,user_roles);
-    }
-
-    @PostMapping("/create/faculty")
-    public Faculty createFaculty(@RequestBody Faculty faculty)throws FacultyAlreadyExists {
-        return userService.createFaculty(faculty);
-    }
-    @GetMapping("/faculty/{email}")
-    public Faculty getFaculty(@PathVariable String email)throws FacultyNotFound{
-        return userService.getFaculty(email);
     }
 
     @GetMapping("/sendMail")
