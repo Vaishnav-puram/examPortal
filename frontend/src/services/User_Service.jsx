@@ -1,4 +1,5 @@
-import { axiosService } from "./Helper";
+import axios from "axios";
+import { axiosFacultyService, axiosService } from "./Helper";
 
 export const signUp=(user)=>{
     return axiosService.post('/create',user)
@@ -94,9 +95,19 @@ function saveToken(token){
     localStorage.setItem('token',JSON.stringify(token))
 }
 
-function getToken(){
+function saveFacultyToken(token){
+    localStorage.setItem('facultyToken',JSON.stringify(token))
+}
+
+
+export const getToken=()=>{
     // return localStorage.getItem('token')
     const tokenString = localStorage.getItem('token');
+    return JSON.parse(tokenString);
+}
+function getFacultyToken(){
+    // return localStorage.getItem('token')
+    const tokenString = localStorage.getItem('facultyToken');
     return JSON.parse(tokenString);
 }
 
@@ -114,6 +125,9 @@ export const logoff=()=>{
      localStorage.removeItem('token');
      localStorage.removeItem('role');
      localStorage.removeItem('name');
+     localStorage.removeItem('current_faculty');
+     localStorage.removeItem('currUser');
+     localStorage.removeItem('facultyToken');
 }
 
 function setUser(user){
@@ -133,9 +147,58 @@ export const getRole=()=>{
 export const signin=(user)=>{
     const{rollno,password}=user;
     const loginURL=`/login/${rollno}?password=${password}`
-    return axiosService.get(loginURL,user)
+    return axiosService.get(loginURL,user,{
+        headers: {
+          'Authorization': `Bearer ${getToken().token}`
+        }
+      })
         .then((response)=>{
             console.log(response.data)
             return response.data
         })
+}
+
+export const facultyToken=(facultyData)=>{
+    return axiosFacultyService.post('generate-token',facultyData)
+            .then((response)=>{
+                console.log(response.data)
+                saveFacultyToken(response.data)
+                return facultySignIn(facultyData);
+            }).then((res)=>{
+                console.log("faculty -->",res.data)
+                localStorage.setItem("current_faculty",JSON.stringify(res.data));
+                switchFacultyPage();
+            }).catch((error) => {
+                console.error("Error while fetching token:", error);
+            });
+}
+
+export const facultySignIn=(facultyData)=>{
+    const{email,password}=facultyData;
+    console.log("inside facultySignIn -->",facultyData.email,facultyData.password)
+    const facultyLoginURL=`login/${email}?password=${password}`;
+    const facultyToken=getFacultyToken();
+    console.log("faculty token : ",facultyToken.token);
+    return axiosFacultyService.get(facultyLoginURL,{
+        headers: {
+          'Authorization': `Bearer ${facultyToken.token}`,
+        }
+      })
+}
+
+export const currFaculty=()=>{
+    return localStorage.getItem('current_faculty');
+}
+export const currSubject=()=>{
+    var subject=currFaculty();
+    return JSON.parse(subject).subject;
+}
+export const currFacultyName=()=>{
+    var faculty=currFaculty();
+    console.log("faculty --> ",faculty);
+    console.log(JSON.parse(faculty).name)
+    return JSON.parse(faculty).name;
+}
+function switchFacultyPage(){
+    window.location.href='/faculty-dashboard';
 }
