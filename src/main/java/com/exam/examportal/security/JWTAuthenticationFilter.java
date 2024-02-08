@@ -89,7 +89,7 @@ UserDetailsService userDetailsService;
             //fetch user detail from username
             String requestURI = request.getRequestURI();
             UserDetailsService selectedUserDetailsService = null;
-            if (requestURI.contains("/exam")||requestURI.contains("/category")||requestURI.contains("/quiz")||requestURI.contains("/question")) {
+            if (requestURI.contains("/exam")) {
                 selectedUserDetailsService = userDetailsService;
             } else if (requestURI.contains("/faculty")) {
                 selectedUserDetailsService = facultyDetailsService;
