@@ -14,6 +14,8 @@ import Profile from './components/admin/profile';
 import Sidebar from './components/admin/Sidebar';
 import AdminHome from './components/admin/AdminHome';
 import UserHome from './components/user/UserHome';
+import Categories from './components/admin/Categories';
+import FacultyDashBoard from './components/faculty/FacultyDashBoard';
 
 function App() {
 
@@ -31,6 +33,7 @@ function App() {
             <Route path='menu' element={<Sidebar />} />
             <Route path='admin-home' element={<AdminHome />} />
             <Route path='profile' element={<Profile />} />
+            <Route path='categories' element={<Categories/>}/>
           </Route>
           <Route path='/user-dashboard' element={<UserDashBoard />}>
             <Route path='menu' element={<Sidebar />} />
@@ -39,6 +42,7 @@ function App() {
           </Route>
           <Route path='/submitOTP' element={<SubmitOTP />} />
           <Route path='/forgetPassword' element={<ForgetPassword />} />
+          <Route path='/faculty-dashboard' element={<FacultyDashBoard/>}/>
         </Routes>
       </BrowserRouter>
     </>
