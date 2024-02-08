@@ -16,6 +16,7 @@ import AdminHome from './components/admin/AdminHome';
 import UserHome from './components/user/UserHome';
 import Categories from './components/admin/Categories';
 import FacultyDashBoard from './components/faculty/FacultyDashBoard';
+import AddQuestion from './components/faculty/AddQuestion';
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
           <Route path='/submitOTP' element={<SubmitOTP />} />
           <Route path='/forgetPassword' element={<ForgetPassword />} />
           <Route path='/faculty-dashboard' element={<FacultyDashBoard/>}/>
+          <Route path='/faculty-dashboard/addQuestion/:qid' element={<AddQuestion/>}/>
         </Routes>
       </BrowserRouter>
     </>
