@@ -1,9 +1,11 @@
+import ListOfQuizzes from "./ListOfQuizzes";
 function UserHome(){
     return(
         <>
-            <div id="profileContent">
-                <h1 id="profile">This is User Home Page</h1>
+            <div>
+                <ListOfQuizzes/>
             </div>
+            
         </>
     )
 }
