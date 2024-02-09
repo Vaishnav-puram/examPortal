@@ -1,4 +1,3 @@
-import axios from "axios";
 import { axiosFacultyService, axiosService } from "./Helper";
 
 export const signUp=(user)=>{
