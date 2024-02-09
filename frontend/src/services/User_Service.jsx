@@ -211,3 +211,60 @@ export const getQuizzesForFaculty=()=>{
     })
 
 }
+
+export const getCategories=()=>{
+   return axiosService.get('category/getCategories',{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`
+        }
+    })
+}
+
+export const addCategory=(categoryData)=>{
+    return axiosService.post('category/addCategory',categoryData,{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`
+        }
+    })
+}
+
+export const deleteCategory=(cid)=>{
+    return axiosService.delete(`category/delCategory/${cid}`,{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`
+        }
+    })
+}
+
+export const addQuiz=(quizData)=>{
+    return axiosService.post('quiz/addQuiz',quizData,{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`
+        } 
+    })
+}
+
+export const getQuizzes=()=>{
+    return axiosService.get('quiz/getQuizzes',{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`
+        }
+    })
+}
+
+export const getQuestions=(qid)=>{
+    return axiosService.get(`/question/getQuestionsByQuiz/${qid}`,{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`
+        } 
+    })
+}
+
+export const getQuizzesByCategory=(category)=>{
+    return axiosService.get(`/getQuizBySubject/${category}`,{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`,
+          }
+    })
+
+}
