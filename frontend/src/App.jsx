@@ -17,7 +17,12 @@ import UserHome from './components/user/UserHome';
 import Categories from './components/admin/Categories';
 import FacultyDashBoard from './components/faculty/FacultyDashBoard';
 import AddQuestion from './components/faculty/AddQuestion';
-
+import AddCategory from './components/admin/AddCategory';
+import AddQuiz from './components/admin/AddQuiz';
+import CategoriesForQuiz from './components/admin/CategoriesForQuiz';
+import Quizzes from './components/admin/Quizzes';
+import Questions from './components/admin/Questions';
+import UserQuizComponent from './components/user/UserQuizComponent';
 function App() {
 
 
@@ -35,11 +40,17 @@ function App() {
             <Route path='admin-home' element={<AdminHome />} />
             <Route path='profile' element={<Profile />} />
             <Route path='categories' element={<Categories/>}/>
+            <Route path='categoriesForQuiz' element={<CategoriesForQuiz/>}/>
+            <Route path='getQuizzes' element={<Quizzes/>}/>
+            <Route path='questions/:qid' element={<Questions/>}/>
           </Route>
+          <Route path='/admin-dashboard/addCategory' element={<AddCategory/>}/>
+          <Route path='/admin-dashboard/addQuiz/:cid' element={<AddQuiz/>}/>
           <Route path='/user-dashboard' element={<UserDashBoard />}>
             <Route path='menu' element={<Sidebar />} />
             <Route path='user-home' element={<UserHome/>} />
             <Route path='profile' element={<Profile />} />
+            <Route path='quizzes/:category' element={<UserQuizComponent/>}/>
           </Route>
           <Route path='/submitOTP' element={<SubmitOTP />} />
           <Route path='/forgetPassword' element={<ForgetPassword />} />
