@@ -34,6 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -68,10 +69,16 @@ public class SecurityConfig {
         http.csrf(csrf -> csrf.disable())
                 .authorizeRequests()
                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                .requestMatchers("/exam/sendOTP/{rollno}").permitAll()
-                .requestMatchers("/exam/verifyOtp").permitAll()
-                .requestMatchers("/exam/forgetPassword/").permitAll()
-                .requestMatchers("/exam/*","/faculty/*").permitAll().anyRequest()
+                .requestMatchers(new AntPathRequestMatcher("/swagger-ui.html/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/v*/api-doc*/**")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/exam/generate-token")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/faculty/generate-token")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/exam/sendOTP/{rollno}")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/exam/createUserAndImage")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/exam/create")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/exam/verifyOtp")).permitAll()
+                .requestMatchers(new AntPathRequestMatcher("/exam/forgetPassword/")).permitAll()
+                .anyRequest()
                 .authenticated()
                 .and()
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
