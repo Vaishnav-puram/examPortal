@@ -1,0 +1,23 @@
+.hover-text {
+    color: black;
+    background-color: white; 
+  }
+  .hover-text:hover {
+    background-color: grey;
+    justify-content: center;
+    border-radius: 50%;
+  }
+.categoryText{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 3px solid black;
+}
+.categoryContent{
+    margin-top: 100px;
+    margin-right: 300px;
+    font-size: medium;
+}
+.btns{
+    display: flex;
+    align-items: center;
+}
