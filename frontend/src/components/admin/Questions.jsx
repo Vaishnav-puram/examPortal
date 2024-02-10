@@ -1,11 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
+import {useParams } from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from "react";
 import { getQuestions ,getToken} from "../../services/User_Service";
 import { axiosService } from "../../services/Helper";
 function Questions(){
-    const navigate=useNavigate();
     const {qid}=useParams();
     let [questionData,setQuestionData]=useState([]);
     useEffect(()=>{
