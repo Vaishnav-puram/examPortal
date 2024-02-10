@@ -23,6 +23,8 @@ import CategoriesForQuiz from './components/admin/CategoriesForQuiz';
 import Quizzes from './components/admin/Quizzes';
 import Questions from './components/admin/Questions';
 import UserQuizComponent from './components/user/UserQuizComponent';
+import QuestionPaper from './components/user/QuestionPaper';
+import Results from './components/user/Results';
 function App() {
 
 
@@ -51,7 +53,9 @@ function App() {
             <Route path='user-home' element={<UserHome/>} />
             <Route path='profile' element={<Profile />} />
             <Route path='quizzes/:category' element={<UserQuizComponent/>}/>
+            {/* <Route path='results/:qId' element={<Results/>}/> */}
           </Route>
+          <Route path='/user-dashboard/questionPaper/:qid' element={<QuestionPaper/>}/>
           <Route path='/submitOTP' element={<SubmitOTP />} />
           <Route path='/forgetPassword' element={<ForgetPassword />} />
           <Route path='/faculty-dashboard' element={<FacultyDashBoard/>}/>
