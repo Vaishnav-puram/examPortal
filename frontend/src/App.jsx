@@ -25,6 +25,9 @@ import Questions from './components/admin/Questions';
 import UserQuizComponent from './components/user/UserQuizComponent';
 import QuestionPaper from './components/user/QuestionPaper';
 import Results from './components/user/Results';
+import AskLogin from './components/AskLogin';
+import FacultySignIn from './components/faculty/FacultySignIn';
+import AdminSignIn from './components/admin/AdminSignIn';
 function App() {
 
 
@@ -34,7 +37,10 @@ function App() {
         <ToastContainer />
         <Routes>
           <Route path='/' element={<Home />} />
+          <Route path='/who' element={<AskLogin/>}/>
           <Route path='/signin' element={<SignIn />} />
+          <Route path='/facultySignIn' element={<FacultySignIn/>}/>
+          <Route path='/adminSignIn' element={<AdminSignIn/>}/>
           <Route path='/otpSend' element={<OtpSend />} />
           <Route path='/signup' element={<SignUp />} />
           <Route path='/admin-dashboard' element={<AdminDashBoard />}>
