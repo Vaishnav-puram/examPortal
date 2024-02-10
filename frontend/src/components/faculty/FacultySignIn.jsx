@@ -7,6 +7,7 @@ import "../../index.css"
 import { facultyToken } from "../../services/User_Service";
 import { toast } from 'react-toastify';
 import { NavLink } from "react-router-dom";
+import Header from "../Header";
 function FacultySignIn() {
     const str = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     const [captcha, setCaptcha] = useState("rRXYgy")
@@ -69,6 +70,7 @@ function FacultySignIn() {
     }
     return (
         <>
+            <Header/>
             <Container style={{ width: '550px', fontSize: 'medium' }}>
                 <Card>
                     <CardHeader>
