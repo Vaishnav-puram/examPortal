@@ -12,7 +12,7 @@ function Navbar2(){
         <>
              <ul>
                 <span id="registered" style={{float:'right', marginRight:'30px'}} to={'/signup'}>{uname}</span>
-                <NavLink id="loginBtn" style={{float:'right', marginRight:'20px'}} to={'/signin'} onClick={handleLogout}>Logout</NavLink>   
+                <NavLink id="loginBtn" style={{float:'right', marginRight:'20px'}} to={'/'} onClick={handleLogout}>Logout</NavLink>   
             </ul>
         </>
     )

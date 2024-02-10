@@ -20,7 +20,7 @@ function Navbar(){
                 <span id="menu" style={{float:'left', marginRight:'30px'}} onClick={toogleSidebar}>Menu</span>
                 {/* <NavLink to={'/admin-dashboard/menu'} id="menu">Menu</NavLink> */}
                 <span id="registered" style={{float:'right', marginRight:'30px'}} to={'/signup'}>{uname}</span>
-                <NavLink id="loginBtn" style={{float:'right', marginRight:'20px'}} to={'/signin'} onClick={handleLogout}>Logout</NavLink>   
+                <NavLink id="loginBtn" style={{float:'right', marginRight:'20px'}} to={'/'} onClick={handleLogout}>Logout</NavLink>   
             </ul>
             {isSidebarOpen && <Sidebar/>}
         </>
