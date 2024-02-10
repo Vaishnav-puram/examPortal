@@ -1,5 +1,6 @@
 package com.exam.examportal.cotroller;
 
+import com.exam.examportal.dto.QuestionResponseDTO;
 import com.exam.examportal.exceptions.FacultyAlreadyExists;
 import com.exam.examportal.exceptions.FacultyNotFound;
 import com.exam.examportal.exceptions.UserAlreadyExists;
@@ -41,6 +42,8 @@ public class EntryController {
 
     @Autowired
     private ImageHandlingService imageService;
+    @Autowired
+    private CalculateResultService calculateResultService;
 
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
@@ -119,5 +122,9 @@ public class EntryController {
     public ResponseEntity<Set<Quiz>> getQuizBySubject(@PathVariable String subject){
         System.out.println("inside getQuizBySubject"+subject);
         return ResponseEntity.ok(quizService.findQuizBySubject(subject));
+    }
+    @PostMapping("/getResults")
+    public ResponseEntity<Integer> calcResults(@RequestBody List<QuestionResponseDTO> questionResponseDTO){
+        return ResponseEntity.ok(calculateResultService.calcResult(questionResponseDTO));
     }
 }
