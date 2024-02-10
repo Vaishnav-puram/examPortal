@@ -268,3 +268,11 @@ export const getQuizzesByCategory=(category)=>{
     })
 
 }
+export const getResults=(questionData)=>{
+    console.log("inside call --> ",questionData);
+    return axiosService.post('/getResults',questionData,{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`,
+          }
+    })
+}
