@@ -1,12 +1,14 @@
 package com.exam.examportal.cotroller;
 
 import com.exam.examportal.dto.QuestionResponseDTO;
+import com.exam.examportal.dto.ResultResponseDTO;
 import com.exam.examportal.exceptions.FacultyAlreadyExists;
 import com.exam.examportal.exceptions.FacultyNotFound;
 import com.exam.examportal.exceptions.UserAlreadyExists;
 import com.exam.examportal.exceptions.UserNotFound;
 import com.exam.examportal.models.*;
 import com.exam.examportal.models.QuizModel.Quiz;
+import com.exam.examportal.repo.ResultRepo;
 import com.exam.examportal.service.*;
 import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,14 +16,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static org.springframework.http.MediaType.IMAGE_GIF_VALUE;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
@@ -45,6 +45,8 @@ public class EntryController {
     @Autowired
     private CalculateResultService calculateResultService;
 
+    @Autowired
+    ResultRepo resultRepo;
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
@@ -78,7 +80,7 @@ public class EntryController {
         return userService.createUser(user,user_roles);
     }
 
-    @GetMapping("/sendMail")
+    @PostMapping("/sendMail")
     public String sendMail(@RequestParam String TO,@RequestParam String msg) throws MessagingException {
             emailService.sendMail(TO,msg);
 
@@ -107,24 +109,35 @@ public class EntryController {
         return ResponseEntity.ok("Created successfully");
     }
     @PostMapping(value = "/images/{rollno}", consumes ={ MediaType.MULTIPART_FORM_DATA_VALUE,IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE})
-    public ResponseEntity<?> uploadImage(@PathVariable String rollno, @RequestParam MultipartFile image)
+    public ResponseEntity<?> uploadImage(@PathVariable String rollno, @RequestParam("image") MultipartFile image)
             throws IOException {
         System.out.println("in upload image " + rollno);
         System.out.println("image --> "+image);
         return ResponseEntity.status(HttpStatus.CREATED).body(imageService.uploadImage(rollno, image));
     }
     @GetMapping("/getImage/{rollno}")
-    public byte[] getImageForUser(@PathVariable String rollno) throws IOException {
-        return imageService.serveImage(rollno);
+    public ResponseEntity<String> getImageForUser(@PathVariable String rollno) throws IOException {
+        byte[] imageData = imageService.serveImage(rollno);
+        String base64Image = Base64.getEncoder().encodeToString(imageData);
+        return ResponseEntity.ok(base64Image);
     }
-
+    @GetMapping("/getImageForQuestion/{question}")
+    public ResponseEntity<String> getImageForQuestion(@PathVariable String question) throws IOException {
+        byte[] imageData = imageService.serveImageForQuestion(question);
+        String base64Image = Base64.getEncoder().encodeToString(imageData);
+        return ResponseEntity.ok(base64Image);
+    }
     @GetMapping("/getQuizBySubject/{subject}") //to include special characters and to consume url as plain text without URL decoding
     public ResponseEntity<Set<Quiz>> getQuizBySubject(@PathVariable String subject){
         System.out.println("inside getQuizBySubject"+subject);
         return ResponseEntity.ok(quizService.findQuizBySubject(subject));
     }
-    @PostMapping("/getResults")
-    public ResponseEntity<Integer> calcResults(@RequestBody List<QuestionResponseDTO> questionResponseDTO){
-        return ResponseEntity.ok(calculateResultService.calcResult(questionResponseDTO));
+    @PostMapping("/getResults/{rollno}")
+    public ResponseEntity<List<ResultResponseDTO>> calcResults(@RequestBody List<QuestionResponseDTO> questionResponseDTO, @PathVariable String rollno) throws MessagingException {
+        return ResponseEntity.ok(calculateResultService.calcResult(questionResponseDTO,rollno));
+    }
+    @GetMapping("/getResultSet/{rollno}")
+    public ResponseEntity<List<ResultResponseDTO>> getResultSet(@PathVariable String rollno){
+        return ResponseEntity.ok(resultRepo.findByRollno(rollno));
     }
 }
