@@ -9,6 +9,26 @@
     align-items: center;
 }
 
+.listOfQuizzes {
+  height: 20vh;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-gap: 20px;
+  padding: 20px;
+  font-size: medium;
+}
+
+.quizCard{
+  position: relative; 
+  transition: transform 0.4s ease-in-out;
+  transform-style: preserve-3d;
+}
+.quizCard:hover{
+  transition: transform 0.8s ease-in-out;
+  backface-visibility: hidden;
+  transform: rotateY(-10deg) rotateZ(0.7deg) rotateY(-0.7deg);
+  box-shadow: 2px 3px 5px grey;
+}
 .gridContainer {
     display: grid;
     grid-template-columns: 1fr 4fr; 
@@ -19,26 +39,60 @@
   }
   
   .item-2 {
+    /* height: 500px; */
     grid-column: 2;
+    padding: 20px;
     font-size: large;
+    /* border: 1px solid black;
+    padding: 20px;
+    overflow: scroll; */
+  }
+  .options{
+   padding: 20px;
+  }
+  .parent_OPT1,.parent_OPT2,.parent_OPT3,.parent_OPT4{
+    background-color: #1F2022;
+    border: 1px solid black;
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: 10px 13px 5px grey;
+  }
+  .opt1,.opt2,.opt3,.opt4{
+    color: white;
+    margin-left: 30px;
+    padding: 10px;
+  }
+  .clearBtn{
+    font-size: medium;
+    margin-bottom: 5px;
+    margin-left: 20px;
   }
 .innerGridComponent{
-    font-size: large;
+    font-size: medium;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 10px;
+    background-color: aliceblue;
     border: 1px solid black;
     padding: 10px;
     position: sticky;
     top: 0; 
 }
 .box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid black;
-    padding: 10px; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid black;
+  padding: 10px; 
 }
 .box:hover{
-    background-color: gray;
+  background-color: gray;
+}
+.questionSubmit{
+  font-size: larger;
+  display: flex;
+  margin-left: 50%;
+  justify-content: center;
+  align-items: center;
+  bottom: 0%;
 }
