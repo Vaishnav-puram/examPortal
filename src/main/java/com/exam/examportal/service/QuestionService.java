@@ -13,5 +13,6 @@ public interface QuestionService {
     Set<Question> getQuestions();
     Set<Question> getQuestionsOfQuiz(Quiz quiz);
     Question getByQueId(Long queId);
+    Question getByQueName(String name);
     void deleteQuestion(Long queId);
 }
