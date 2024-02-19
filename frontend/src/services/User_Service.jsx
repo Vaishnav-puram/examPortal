@@ -4,6 +4,20 @@ export const signUp=(user)=>{
     return axiosService.post('/create',user)
             .then((response)=>{response.data})
 }
+
+export const uploadImageForUserId=(image,rollno)=>{
+    let formData=new FormData();
+    formData.append("image",image);
+    return axiosService.post(`/images/${rollno}`,formData).then((res)=>res.data);
+
+}
+
+export const getImageFromRollno=(rollno)=>{
+    return axiosService.get(`/getImage/${rollno}`,{
+        headers: {
+          'Authorization': `Bearer ${getToken().token}`
+    }});
+}
 export const  tokenGetter=(user)=>{
     return axiosService.post('generate-token',user) //generate token before logging in
             .then((response)=>{
@@ -90,6 +104,10 @@ function saveCurrentUser(user){
 export const getUserName=()=>{
     return localStorage.getItem('name');
 } 
+export const getRollno=()=>{
+    const id=localStorage.getItem('user');
+    return JSON.parse(id).rollno; 
+}
 function saveToken(token){
     localStorage.setItem('token',JSON.stringify(token))
 }
@@ -268,11 +286,49 @@ export const getQuizzesByCategory=(category)=>{
     })
 
 }
-export const getResults=(questionData)=>{
+export const getResults=(questionData,rollno)=>{
     console.log("inside call --> ",questionData);
-    return axiosService.post('/getResults',questionData,{
+    return axiosService.post(`/getResults/${rollno}`,questionData,{
         headers: {
             'Authorization': `Bearer ${getToken().token}`,
           }
     })
+}
+export const getResultSet=(rollno)=>{
+    console.log("inside call --> ",rollno);
+    return axiosService.get(`/getResultSet/${rollno}`,{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`,
+          }
+    })
+}
+export const sendMail=(mailBody)=>{
+    console.log("inside sedMail service");
+    return axiosFacultyService.post('/sendMail',mailBody,{
+        headers: {
+            'Authorization': `Bearer ${getFacultyToken().token}`,
+          }});
+}
+
+export const uploadImageForQuestion=(image,question)=>{
+    let formData=new FormData();
+    formData.append("image",image);
+    return axiosFacultyService.post(`/images/${question}`,formData,{
+        headers: {
+            'Authorization': `Bearer ${getFacultyToken().token}`,
+          }}).then((res)=>res.data);
+}
+export const getQuestion=(question)=>{
+    return axiosFacultyService.get(`/getQuestion/${question}`,{
+        headers: {
+            'Authorization': `Bearer ${getFacultyToken().token}`,
+          }});
+}
+export const getImageFromQuestion=(question)=>{
+    console.log("inside getImageFrom Question")
+    let img=axiosFacultyService.get(`/getImageForQuestion/${question}`,{
+        headers: {
+          'Authorization': `Bearer ${getFacultyToken().token}`
+    }}).then((res)=>img=res.data);
+    return img;
 }
