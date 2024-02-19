@@ -9,6 +9,8 @@ public class ResultResponseDTO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String rollno;
+
+    private String quiz;
     private Long queId;
 
     @Column(length = 5000)
@@ -110,6 +112,22 @@ public class ResultResponseDTO {
 
     public void setRollno(String rollno) {
         this.rollno = rollno;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getQuiz() {
+        return quiz;
+    }
+
+    public void setQuiz(String quiz) {
+        this.quiz = quiz;
     }
 
     @Override
