@@ -8,8 +8,8 @@ function FacultyDashBoard(){
         <>
             <Header/>
             <Navbar/>
-            <h3>Welcome to Faculty page</h3>
-            <h2>Category :{subject} </h2>
+            <h3 style={{color:'white'}}>Welcome to Faculty page</h3>
+            <h2 style={{color:'white'}}>Category :{subject} </h2>
             <QuizComponent/>
         </>
     )
