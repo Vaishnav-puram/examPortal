@@ -47,7 +47,7 @@ public class CalculateResultServiceImpl implements CalculateResultService {
             resultResponseDTO.setOption_3(question.getOption_3());
             resultResponseDTO.setOption_4(question.getOption_4());
             resultResponseDTO.setRollno(rollno);
-
+            resultResponseDTO.setQuiz(quiz.getTitle());
             resultResponseDTOList.add(resultResponseDTO);
             if(question.getAnswer().equals(questionResponseDTO.get(i).getGivenAnswer())){
                 correctAnswers++;
