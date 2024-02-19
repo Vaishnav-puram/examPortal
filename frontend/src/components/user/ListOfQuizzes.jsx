@@ -37,7 +37,7 @@ function ListOfQuizzes() {
         .map((quiz) => {
             return (
                 <>
-                    <Card key={quiz.qid}>
+                    <Card key={quiz.qid} className='quizCard'>
                         <Card.Header as="h3">{quiz.category.title}</Card.Header>
                         <Card.Body>
                             <Card.Title style={{ fontSize: 'medium' }}>{quiz.title}</Card.Title>
@@ -61,7 +61,7 @@ function ListOfQuizzes() {
     return (
         <div style={{ marginRight: '105px' }}>
             <Form.Control className='searchBar' type="text" value={inputQuiz} placeholder="Search...." onChange={(e) => setInputQuiz(e.target.value)} />
-            <div style={{ height: '20vh', display: 'grid', gridTemplateColumns: 'auto auto auto', gridGap: '20px', padding: '20px', fontSize: 'medium' }}>
+            <div className='listOfQuizzes'>
                 {filteredQuizzes}
             </div>
         </div>
