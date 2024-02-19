@@ -9,6 +9,7 @@ import java.util.Set;
 
 public interface QuestionRepo extends JpaRepository<Question,Long> {
     Question findByQueId(Long queId);
+    Question findByContent(String content);
     Set<Question> findByQuiz(Quiz quiz);
 
 }
