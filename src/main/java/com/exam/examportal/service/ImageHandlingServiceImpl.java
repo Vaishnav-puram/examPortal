@@ -2,7 +2,9 @@ package com.exam.examportal.service;
 
 import com.exam.examportal.dto.ApiResponse;
 import com.exam.examportal.exceptions.ApiException;
+import com.exam.examportal.models.QuizModel.Question;
 import com.exam.examportal.models.User;
+import com.exam.examportal.repo.QuestionRepo;
 import com.exam.examportal.repo.UserRepo;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,8 @@ public class ImageHandlingServiceImpl implements ImageHandlingService {
 
 	@Autowired
 	private UserRepo userRepo;
+	@Autowired
+	private QuestionRepo questionRepo;
 
 	@PostConstruct
 	public void init() throws IOException {
@@ -54,6 +58,22 @@ public class ImageHandlingServiceImpl implements ImageHandlingService {
 	}
 
 	@Override
+	public ApiResponse uploadImageForQuestion(String ques, MultipartFile image) throws IOException {
+		System.out.println("ques --> "+ques);
+		Question question = questionRepo.findByContent(ques);
+		System.out.println("question --> "+question.getContent());
+		// store the image on server side folder
+		String path = uploadFolder.concat(image.getOriginalFilename());
+		System.out.println(path);
+		// Use FileUtils method : writeByte[] --> File
+		writeByteArrayToFile(new File(path), image.getBytes());
+		// set image path
+		question.setImage(path);
+		questionRepo.save(question);
+		return new ApiResponse("Image file uploaded successfully for question " + question.getQueId());
+	}
+
+	@Override
 	public void uploadImage(User user, MultipartFile image) throws IOException {
 		// store the image on server side folder
 		String path = uploadFolder.concat(image.getOriginalFilename());
@@ -69,6 +89,16 @@ public class ImageHandlingServiceImpl implements ImageHandlingService {
 	public byte[] serveImage(String rollno) throws IOException {
 		User user=userRepo.findByRollno(rollno);
 		String path = user.getProfile();
+		if (path != null) {
+			return readFileToByteArray(new File(path));
+		} else
+			throw new ApiException("Image not yet assigned !!!!");
+
+	}
+	@Override
+	public byte[] serveImageForQuestion(String ques) throws IOException {
+		Question question = questionRepo.findByContent(ques);
+		String path = question.getImage();
 		if (path != null) {
 			return readFileToByteArray(new File(path));
 		} else
