@@ -28,6 +28,7 @@ import Results from './components/user/Results';
 import AskLogin from './components/AskLogin';
 import FacultySignIn from './components/faculty/FacultySignIn';
 import AdminSignIn from './components/admin/AdminSignIn';
+import MailToStudents from './components/faculty/MailToStudents';
 function App() {
 
 
@@ -59,13 +60,14 @@ function App() {
             <Route path='user-home' element={<UserHome/>} />
             <Route path='profile' element={<Profile />} />
             <Route path='quizzes/:category' element={<UserQuizComponent/>}/>
-            {/* <Route path='results/:qId' element={<Results/>}/> */}
+            <Route path='results' element={<Results/>}/>
           </Route>
           <Route path='/user-dashboard/questionPaper/:qid' element={<QuestionPaper/>}/>
           <Route path='/submitOTP' element={<SubmitOTP />} />
           <Route path='/forgetPassword' element={<ForgetPassword />} />
           <Route path='/faculty-dashboard' element={<FacultyDashBoard/>}/>
           <Route path='/faculty-dashboard/addQuestion/:qid' element={<AddQuestion/>}/>
+          <Route path='/faculty-dashboard/mail' element={<MailToStudents/>}/>
         </Routes>
       </BrowserRouter>
     </>
