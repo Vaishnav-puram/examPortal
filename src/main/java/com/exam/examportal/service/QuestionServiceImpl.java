@@ -40,6 +40,11 @@ public class QuestionServiceImpl implements QuestionService{
     }
 
     @Override
+    public Question getByQueName(String name) {
+        return questionRepo.findByContent(name);
+    }
+
+    @Override
     public void deleteQuestion(Long queId) {
         Question question=new Question();
         question.setQueId(queId);
