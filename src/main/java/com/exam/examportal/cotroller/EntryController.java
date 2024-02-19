@@ -1,6 +1,7 @@
 package com.exam.examportal.cotroller;
 
 import com.exam.examportal.dto.QuestionResponseDTO;
+import com.exam.examportal.dto.ResultMaxDTO;
 import com.exam.examportal.dto.ResultResponseDTO;
 import com.exam.examportal.exceptions.FacultyAlreadyExists;
 import com.exam.examportal.exceptions.FacultyNotFound;
@@ -11,6 +12,7 @@ import com.exam.examportal.models.QuizModel.Quiz;
 import com.exam.examportal.repo.ResultRepo;
 import com.exam.examportal.service.*;
 import jakarta.mail.MessagingException;
+import jakarta.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -46,7 +48,7 @@ public class EntryController {
     private CalculateResultService calculateResultService;
 
     @Autowired
-    ResultRepo resultRepo;
+    ResultService resultService;
     @Autowired
     BCryptPasswordEncoder passwordEncoder;
 
@@ -137,7 +139,8 @@ public class EntryController {
         return ResponseEntity.ok(calculateResultService.calcResult(questionResponseDTO,rollno));
     }
     @GetMapping("/getResultSet/{rollno}")
-    public ResponseEntity<List<ResultResponseDTO>> getResultSet(@PathVariable String rollno){
-        return ResponseEntity.ok(resultRepo.findByRollno(rollno));
+    public ResponseEntity<List<ResultMaxDTO>> getResultSet(@PathVariable String rollno){
+
+        return ResponseEntity.ok(resultService.getData(rollno));
     }
 }
