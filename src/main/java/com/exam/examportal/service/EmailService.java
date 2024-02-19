@@ -37,7 +37,7 @@ public class EmailService {
 
     public void sendMail(String to, String msg) throws MessagingException {
 
-        mimeMessage = mailHelper.mailSender(from, to, sub, "Message from IACSD");
+        mimeMessage = mailHelper.mailSender(from, to, sub, msg);
         javaMailSender.send(mimeMessage);
     }
 
