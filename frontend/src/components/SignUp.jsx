@@ -4,11 +4,13 @@ import { Card, CardHeader } from "reactstrap";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useState, useEffect } from "react";
-import { signUp } from "../services/User_Service";
+import { signUp, uploadImageForUserId } from "../services/User_Service";
 import { toast } from 'react-toastify';
 import "../index.css"
+import { useNavigate } from "react-router-dom";
 function SignUp() {
-    //initializng userData obj
+    const navigate=useNavigate();
+    let [image,setImage]=useState(null);
     let [userData, setUserData] = useState({
         rollno: "",
         firstname: "",
@@ -30,6 +32,7 @@ function SignUp() {
     //calls whenever the userData obj gets changed
     useEffect(() => {
         console.log(userData);
+        console.log(image);
     }, [userData])
     useEffect(() => {
         console.log(err);
@@ -38,11 +41,18 @@ function SignUp() {
     const handleChange = (event, property) => {
         setUserData({ ...userData, [property]: event.target.value });
     }
+    const handleImageChange=(event)=>{
+        console.log(event.target.files);
+        setImage(event.target.files[0]);
+    }
 
     //submit form action
-    const submit_Form = (event) => {
+    const submit_Form = async (event) => {
         //preventing the default behavior of submit action 
         event.preventDefault();
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('user',userData);
         console.log(userData);
         //validate the data (properties of userData)
         validateMobile(userData.mobile);
@@ -51,12 +61,31 @@ function SignUp() {
         //call server api-request of create-user
         signUp(userData).then((data)=>{
             console.log(data);
-            console.log("logged in successfully!");
-            toast.success("user logged in successfully");
+            console.log("user created successfully!");
+            toast.success("user created successfully");
+            uploadImageForUserId(image,userData.rollno).then((res)=>{
+                console.log(res)
+            }).catch((err)=>{
+                console.log(err)
+                toast.error("error in uploading image!")
+            })
+            navigate('/who');
         }).catch((err)=>{
             console.log(err);
             toast.error("login failed")
         });
+        // try{
+        //     const res= await axiosService.post('createUserAndImage',formData,{
+        //         headers: {
+        //             'Content-Type':'multipart/form-data'
+        //         },
+        //     })
+        //     toast.success("user logged in successfully");
+        //     console.log("user details -->",res.data);
+        //     }catch(err){
+        //         console.log(err);
+        //         toast.error("login failed")
+        //     }
         setUserData({
         rollno: "",
         firstname: "",
@@ -131,8 +160,10 @@ function SignUp() {
                         <h3>Register Student Details</h3>
                     </CardHeader>
                     <CardBody style={{ color: 'black' }}>
-                        <Form >
-                            <FormGroup>
+                        <Form encType="multipart/form" autoComplete="on">
+                            <FormGroup autoComplete='on'>
+                                <Form.Label>Image upload</Form.Label>
+                                <Form.Control id="uForm" type="file" accept="image/*" onChange={handleImageChange} />
                                 <Form.Label>rollno</Form.Label>
                                 <Form.Control id="uForm" type="text" placeholder="Enter rollno" name="uname" value={userData.rollno} onChange={(e) => handleChange(e, 'rollno')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}>{err.errPass}</span><br />
