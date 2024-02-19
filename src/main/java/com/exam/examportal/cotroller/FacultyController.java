@@ -3,22 +3,26 @@ package com.exam.examportal.cotroller;
 import com.exam.examportal.exceptions.FacultyAlreadyExists;
 import com.exam.examportal.exceptions.FacultyNotFound;
 import com.exam.examportal.models.Faculty;
+import com.exam.examportal.models.MailBody;
 import com.exam.examportal.models.QuizModel.Category;
 import com.exam.examportal.models.QuizModel.Question;
 import com.exam.examportal.models.QuizModel.Quiz;
-import com.exam.examportal.service.CategoryService;
-import com.exam.examportal.service.FacultyService;
-import com.exam.examportal.service.QuestionService;
-import com.exam.examportal.service.QuizService;
+import com.exam.examportal.service.*;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+
+import static org.springframework.http.MediaType.*;
 
 @RestController
 @RequestMapping("/faculty")
@@ -32,6 +36,10 @@ public class FacultyController {
     QuestionService questionService;
     @Autowired
     FacultyService facultyService;
+    @Autowired
+    EmailService emailService;
+    @Autowired
+    ImageHandlingService imageService;
     @PostMapping("/create")
     public Faculty createFaculty(@RequestBody Faculty faculty)throws FacultyAlreadyExists {
         return facultyService.createFaculty(faculty);
@@ -93,5 +101,23 @@ public class FacultyController {
     public ResponseEntity<Set<Quiz>> getQuizBySubject(@PathVariable String subject){
         System.out.println("inside getQuizBySubject"+subject);
         return ResponseEntity.ok(quizService.findQuizBySubject(subject));
+    }
+    @PostMapping("/sendMail")
+    public String sendMail(@RequestBody List<MailBody> mailBody) throws MessagingException {
+        mailBody.forEach((mail)-> {
+            try {
+                emailService.sendMail(mail.getTo(),mail.getBody());
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+        });
+        return "Mail sent successfully";
+    }
+    @PostMapping(value = "/images/{question}", consumes ={ MediaType.MULTIPART_FORM_DATA_VALUE,IMAGE_GIF_VALUE, IMAGE_JPEG_VALUE, IMAGE_PNG_VALUE})
+    public ResponseEntity<?> uploadImage(@PathVariable String question, @RequestParam("image") MultipartFile image)
+            throws IOException {
+        System.out.println("in upload image " + question);
+        System.out.println("image --> "+image);
+        return ResponseEntity.status(HttpStatus.CREATED).body(imageService.uploadImageForQuestion(question, image));
     }
 }
