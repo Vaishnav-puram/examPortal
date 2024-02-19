@@ -7,9 +7,10 @@ import Button from 'react-bootstrap/Button';
 import { useParams ,useNavigate} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { axiosFacultyService } from "../../services/Helper";
-import {getFacultyToken} from "../../services/User_Service";
+import {getFacultyToken, getQuestion, uploadImageForQuestion} from "../../services/User_Service";
 function AddQuestion(){
     const navigate=useNavigate();
+    let [image,setImage]=useState(null);
     const {qid}=useParams();
     let [questionData,setQuestionData]=useState({
         content: "",
@@ -28,14 +29,24 @@ function AddQuestion(){
     const handleChange = (event, property) => {
         setQuestionData({ ...questionData, [property]: event.target.value });
     }
+    const handleImageChange=(event)=>{
+        console.log(event.target.files);
+        setImage(event.target.files[0]);
+    }
     const handleSubmit=(e)=>{
         e.preventDefault();
+        const formData = new FormData();
+        formData.append('image', image);
+        formData.append('question',questionData);
         axiosFacultyService.post('/addQuestion',questionData,{
              headers: {
             'Authorization': `Bearer ${getFacultyToken().token}`,
           }
         }).then((res)=>{
             console.log("response --> ",res.data);
+               uploadImageForQuestion(image,questionData.content).then((res)=>{
+                console.log(res.data)
+               }).catch((err)=>console.log(err));
         }).catch((err)=>{
             console.log(err);
         })
@@ -53,11 +64,11 @@ function AddQuestion(){
                     <CardBody style={{ color: 'black' }}>
                         <Form onSubmit={handleSubmit} autoComplete="on">
                             <FormGroup>
-                                <Form.Label>Quiz_Id</Form.Label>
-                                <Form.Control id="qid" type="text" placeholder="Enter Question" name="qid" value={qid} disabled="true"/><br />
                                 <Form.Label>Question</Form.Label>
-                                <Form.Control id="content" type="text" placeholder="Enter Question" name="content" value={questionData.content} onChange={(e)=>handleChange(e,'content')} />
+                                <Form.Control as="textarea" style={{ height: '100px'}} id="content" type="text" placeholder="Enter Question" name="content" value={questionData.content} onChange={(e)=>handleChange(e,'content')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}></span><br />
+                                <Form.Label>Question Image upload</Form.Label>
+                                <Form.Control id="uForm" type="file" accept="image/*" onChange={handleImageChange} />
                                 <Form.Label>Option_1</Form.Label>
                                 <Form.Control id="option_1" type="text" placeholder="Enter Option 1" name="option_1" value={questionData.option_1} onChange={(e)=>handleChange(e,'option_1')}/>
                                 <span style={{ color: 'red', fontSize: 'small' }}></span><br />
