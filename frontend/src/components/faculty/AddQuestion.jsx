@@ -63,26 +63,26 @@ function AddQuestion(){
                     </CardHeader>
                     <CardBody style={{ color: 'black' }}>
                         <Form onSubmit={handleSubmit} autoComplete="on">
-                            <FormGroup>
+                            <FormGroup style={{fontSize:'medium'}}>
                                 <Form.Label>Question</Form.Label>
-                                <Form.Control as="textarea" style={{ height: '100px'}} id="content" type="text" placeholder="Enter Question" name="content" value={questionData.content} onChange={(e)=>handleChange(e,'content')} />
+                                <Form.Control as="textarea" style={{ height: '100px',fontSize:'medium'}} id="content" type="text" placeholder="Enter Question" name="content" value={questionData.content} onChange={(e)=>handleChange(e,'content')}/>
                                 <span style={{ color: 'red', fontSize: 'small' }}></span><br />
                                 <Form.Label>Question Image upload</Form.Label>
                                 <Form.Control id="uForm" type="file" accept="image/*" onChange={handleImageChange} />
                                 <Form.Label>Option_1</Form.Label>
-                                <Form.Control id="option_1" type="text" placeholder="Enter Option 1" name="option_1" value={questionData.option_1} onChange={(e)=>handleChange(e,'option_1')}/>
+                                <Form.Control style={{fontSize:'medium'}} id="option_1" type="text" placeholder="Enter Option 1" name="option_1" value={questionData.option_1} onChange={(e)=>handleChange(e,'option_1')}/>
                                 <span style={{ color: 'red', fontSize: 'small' }}></span><br />
                                 <Form.Label>Option_2</Form.Label>
-                                <Form.Control id="option_2" type="text" placeholder="Enter Option 2" name="option_2" value={questionData.option_2} onChange={(e)=>handleChange(e,'option_2')}/>
+                                <Form.Control style={{fontSize:'medium'}} id="option_2" type="text" placeholder="Enter Option 2" name="option_2" value={questionData.option_2} onChange={(e)=>handleChange(e,'option_2')}/>
                                 <span style={{ color: 'red', fontSize: 'small' }}></span><br />
                                 <Form.Label>Option_3</Form.Label>
-                                <Form.Control id="option_3" type="text" placeholder="Enter Option 3" name="option_3" value={questionData.option_3} onChange={(e)=>handleChange(e,'option_3')} />
+                                <Form.Control style={{fontSize:'medium'}} id="option_3" type="text" placeholder="Enter Option 3" name="option_3" value={questionData.option_3} onChange={(e)=>handleChange(e,'option_3')} />
                                 <span style={{ color: 'red', fontSize: 'small' }}></span><br />
                                 <Form.Label>Option_4</Form.Label>
-                                <Form.Control id="option_4" type="text" placeholder="Enter Option 4" name="option_4" value={questionData.option_4} onChange={(e)=>handleChange(e,'option_4')}/>
+                                <Form.Control style={{fontSize:'medium'}} id="option_4" type="text" placeholder="Enter Option 4" name="option_4" value={questionData.option_4} onChange={(e)=>handleChange(e,'option_4')}/>
                                 <span style={{ color: 'red', fontSize: 'small' }}></span><br />
                                 <Form.Label>Answer</Form.Label>
-                                <Form.Control id="answer" type="text" placeholder="Enter answer" name="answer" value={questionData.answer} onChange={(e)=>handleChange(e,'answer')} />
+                                <Form.Control style={{fontSize:'medium'}} id="answer" type="text" placeholder="Enter answer" name="answer" value={questionData.answer} onChange={(e)=>handleChange(e,'answer')} />
                                 <br />
                             </FormGroup>
                             <Container className="text-center">
