@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getQuizzes ,deleteQuiz } from "../../services/User_Service";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 function Quizzes() {
     const navigate=useNavigate();
     let [quizData, setQuizData] = useState([]);
@@ -55,7 +55,7 @@ function Quizzes() {
                         <td>{quiz.noOfQuestions}</td>
                         <td>{quiz.active.toString()}</td>
                         <td><Button variant="outline-info" onClick={(e)=>handleQuestions(e,quiz.qid)}>Questions</Button></td>
-                        <td><Button variant="outline-secondary">Update</Button></td>
+                        <td><NavLink to={`/admin-dashboard/updateQuiz/${quiz.qid}`}><Button variant="outline-secondary">Update</Button></NavLink></td>
                         <td><Button variant="outline-danger" onClick={(e)=>handleDelete(e,quiz.qid)}>Delete</Button></td>
                     </tr>
                 ))}
