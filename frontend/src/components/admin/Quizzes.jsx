@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getQuizzes } from "../../services/User_Service";
+import { getQuizzes ,deleteQuiz } from "../../services/User_Service";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from "react-router-dom";
@@ -8,7 +8,7 @@ function Quizzes() {
     let [quizData, setQuizData] = useState([]);
     useEffect(() => {
         fetchQuizzes();
-    }, [])
+    }, [quizData])
     const fetchQuizzes = async () => {
         try {
             const res = await getQuizzes();
@@ -22,6 +22,16 @@ function Quizzes() {
         e.preventDefault();
         navigate(`/admin-dashboard/questions/${qid}`)
 
+    }
+    const handleDelete=async(e,qid)=>{
+        e.preventDefault();
+        try{
+            const res=await deleteQuiz(qid);
+            console.log(res.data);
+            navigate('/admin-dashboard/getQuizzes');
+        }catch(err){
+            console.log(err);
+        }
     }
     return (
         <>
@@ -46,7 +56,7 @@ function Quizzes() {
                         <td>{quiz.active.toString()}</td>
                         <td><Button variant="outline-info" onClick={(e)=>handleQuestions(e,quiz.qid)}>Questions</Button></td>
                         <td><Button variant="outline-secondary">Update</Button></td>
-                        <td><Button variant="outline-danger">Delete</Button></td>
+                        <td><Button variant="outline-danger" onClick={(e)=>handleDelete(e,quiz.qid)}>Delete</Button></td>
                     </tr>
                 ))}
                 </tbody>
