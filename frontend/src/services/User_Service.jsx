@@ -269,6 +269,13 @@ export const getQuizzes=()=>{
         }
     })
 }
+export const deleteQuiz=(qid)=>{
+    return axiosService.delete(`quiz/delQuiz/${qid}`,{
+        headers: {
+            'Authorization': `Bearer ${getToken().token}`
+        }
+    })
+}
 
 export const getQuestions=(qid)=>{
     return axiosService.get(`/question/getQuestionsByQuiz/${qid}`,{
