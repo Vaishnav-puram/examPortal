@@ -27,7 +27,7 @@ public class QuestionController {
     private  QuizService quizService;
     @Autowired
     private ModelMapper modelMapper;
-    @GetMapping("/getQuestion/{queId}")
+    @GetMapping("/getQuestionForAdmin/{queId}")
     public Question getQuestion(@PathVariable Long queId){
         return questionService.getByQueId(queId);
     }
