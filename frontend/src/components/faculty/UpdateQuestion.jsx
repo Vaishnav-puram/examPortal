@@ -75,7 +75,7 @@ function UpdateQuestion(){
             <Container style={{ width: '550px', fontSize: 'medium', border: '20%' }}>
                 <Card border="primary">
                     <CardHeader style={{ backgroundColor: '#CCD0D5' }}>
-                        <h3>Add Question</h3>
+                        <h3>Update Question</h3>
                     </CardHeader>
                     <CardBody style={{ color: 'black' }}>
                         <Form onSubmit={handleSubmit} autoComplete="on">
