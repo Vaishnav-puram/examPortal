@@ -1,4 +1,4 @@
-import {useParams } from "react-router-dom";
+import {useParams ,NavLink} from "react-router-dom";
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from "react";
@@ -50,7 +50,7 @@ function Questions(){
                         <td>{question.option_3}</td>
                         <td>{question.option_4}</td>
                         <td>{question.answer}</td>
-                        <td><Button variant="outline-secondary">Update</Button></td>
+                        <td><NavLink to={`/admin-dashboard/updateQuestion/${question.queId}`}><Button variant="outline-secondary">Update</Button></NavLink></td>
                         <td><Button variant="outline-danger" onClick={(e)=>handleDelete(e,question.queId)}>Delete</Button></td>
                     </tr>
                 ))}
