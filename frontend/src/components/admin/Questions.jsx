@@ -9,7 +9,7 @@ function Questions(){
     let [questionData,setQuestionData]=useState([]);
     useEffect(()=>{
         fetchQuestions();
-    },[questionData])
+    },[])
     const fetchQuestions=async ()=>{
         try{
             const res=await getQuestions(qid);
