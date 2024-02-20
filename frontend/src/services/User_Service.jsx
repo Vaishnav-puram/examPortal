@@ -285,6 +285,13 @@ export const getQuestions=(qid)=>{
     })
 }
 
+export const getQuestionsForFaculty=(qid)=>{
+    return axiosFacultyService.get(`/getQuestionsByQuiz/${qid}`,{
+        headers: {
+            'Authorization': `Bearer ${getFacultyToken().token}`
+        } 
+    })
+}
 export const getQuizzesByCategory=(category)=>{
     return axiosService.get(`/getQuizBySubject/${category}`,{
         headers: {
