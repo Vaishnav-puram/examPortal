@@ -10,7 +10,7 @@ function Categories(){
     let [categories,setCategories]=useState([]);
     useEffect(()=>{
         fetchCategories();
-    },[])
+    },[categories])
 
     const fetchCategories=async ()=>{
            try{
