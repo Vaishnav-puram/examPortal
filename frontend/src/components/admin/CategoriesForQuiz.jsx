@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getCategories,deleteCategory } from "../../services/User_Service";
+import { getCategories } from "../../services/User_Service";
 import './category.css';
 import { IoIosAdd } from "react-icons/io";
 import { NavLink } from 'react-router-dom';

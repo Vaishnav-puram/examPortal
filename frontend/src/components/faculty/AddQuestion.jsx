@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import { useParams ,useNavigate} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { axiosFacultyService } from "../../services/Helper";
-import {getFacultyToken, getQuestion, uploadImageForQuestion} from "../../services/User_Service";
+import {getFacultyToken, uploadImageForQuestion} from "../../services/User_Service";
 function AddQuestion(){
     const navigate=useNavigate();
     let [image,setImage]=useState(null);

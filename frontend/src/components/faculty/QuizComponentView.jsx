@@ -3,7 +3,6 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import { getQuizzesForFaculty } from '../../services/User_Service';
 import { useState, useEffect } from 'react';
 import './faculty.css';
-import { NavLink } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import { useNavigate } from 'react-router-dom';
 function QuizComponentView() {
