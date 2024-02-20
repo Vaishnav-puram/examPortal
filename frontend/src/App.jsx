@@ -33,6 +33,8 @@ import QuizComponentView from './components/faculty/QuizComponentView';
 import QuizComponent from './components/faculty/QuizComponent';
 import QuestionsForFaculty from './components/faculty/QuestionsForFaculty';
 import UpdateQuestion from './components/faculty/UpdateQuestion';
+import UpdateQuestionForAdmin from './components/admin/UpdateQuestionForAdmin';
+import UpdateQuiz from './components/admin/UpdateQuiz';
 function App() {
 
 
@@ -59,6 +61,8 @@ function App() {
           </Route>
           <Route path='/admin-dashboard/addCategory' element={<AddCategory/>}/>
           <Route path='/admin-dashboard/addQuiz/:cid' element={<AddQuiz/>}/>
+          <Route path='/admin-dashboard/updateQuestion/:queId' element={<UpdateQuestionForAdmin/>}/>
+          <Route path='/admin-dashboard/updateQuiz/:qid' element={<UpdateQuiz/>}/>
           <Route path='/user-dashboard' element={<UserDashBoard />}>
             <Route path='menu' element={<Sidebar />} />
             <Route path='user-home' element={<UserHome/>} />
