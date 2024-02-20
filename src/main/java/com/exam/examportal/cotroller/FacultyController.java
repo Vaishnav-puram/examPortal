@@ -120,4 +120,12 @@ public class FacultyController {
         System.out.println("image --> "+image);
         return ResponseEntity.status(HttpStatus.CREATED).body(imageService.uploadImageForQuestion(question, image));
     }
+    @PutMapping("/updateQuestion")
+    public Question updateQuestion(@RequestBody Question question){
+        return questionService.updateQuestion(question);
+    }
+    @DeleteMapping("/delQuestion/{queId}")
+    public void deleteQuestion(@PathVariable Long queId){
+        questionService.deleteQuestion(queId);
+    }
 }
