@@ -29,6 +29,10 @@ import AskLogin from './components/AskLogin';
 import FacultySignIn from './components/faculty/FacultySignIn';
 import AdminSignIn from './components/admin/AdminSignIn';
 import MailToStudents from './components/faculty/MailToStudents';
+import QuizComponentView from './components/faculty/QuizComponentView';
+import QuizComponent from './components/faculty/QuizComponent';
+import QuestionsForFaculty from './components/faculty/QuestionsForFaculty';
+import UpdateQuestion from './components/faculty/UpdateQuestion';
 function App() {
 
 
@@ -65,9 +69,14 @@ function App() {
           <Route path='/user-dashboard/questionPaper/:qid' element={<QuestionPaper/>}/>
           <Route path='/submitOTP' element={<SubmitOTP />} />
           <Route path='/forgetPassword' element={<ForgetPassword />} />
-          <Route path='/faculty-dashboard' element={<FacultyDashBoard/>}/>
+          <Route path='/faculty-dashboard' element={<FacultyDashBoard/>}>
+            <Route path='quizzes' element={<QuizComponent/>}></Route>
+            <Route path='quizComponentView' element={<QuizComponentView/>}></Route>
+            <Route path='questions/:qid' element={<QuestionsForFaculty/>}/>
+          </Route>
           <Route path='/faculty-dashboard/addQuestion/:qid' element={<AddQuestion/>}/>
           <Route path='/faculty-dashboard/mail' element={<MailToStudents/>}/>
+          <Route path='/faculty-dashboard/updateQuestion/:queId' element={<UpdateQuestion/>}/>
         </Routes>
       </BrowserRouter>
     </>
