@@ -35,6 +35,8 @@ import QuestionsForFaculty from './components/faculty/QuestionsForFaculty';
 import UpdateQuestion from './components/faculty/UpdateQuestion';
 import UpdateQuestionForAdmin from './components/admin/UpdateQuestionForAdmin';
 import UpdateQuiz from './components/admin/UpdateQuiz';
+import CreateFacultyForm from './components/admin/CreateFacultyForm';
+import FacultyList from './components/admin/FacultyList';
 function App() {
 
 
@@ -58,6 +60,8 @@ function App() {
             <Route path='categoriesForQuiz' element={<CategoriesForQuiz/>}/>
             <Route path='getQuizzes' element={<Quizzes/>}/>
             <Route path='questions/:qid' element={<Questions/>}/>
+            <Route path='createFaculty' element={<CreateFacultyForm/>}/>
+            <Route path='getAllFaculty' element={<FacultyList/>}></Route>
           </Route>
           <Route path='/admin-dashboard/addCategory' element={<AddCategory/>}/>
           <Route path='/admin-dashboard/addQuiz/:cid' element={<AddQuiz/>}/>
