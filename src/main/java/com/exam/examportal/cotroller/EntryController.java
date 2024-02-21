@@ -36,6 +36,8 @@ public class EntryController {
     @Autowired
     UserService userService;
     @Autowired
+    FacultyService facultyService;
+    @Autowired
     EmailService emailService;
     @Autowired
     UserOTPService userOTPService;
@@ -81,7 +83,15 @@ public class EntryController {
         user_roles.add(userRole);
         return userService.createUser(user,user_roles);
     }
-
+    @PostMapping("/createFaculty")
+    public ResponseEntity<Faculty> createFaculty(@RequestBody Faculty faculty)throws FacultyAlreadyExists {
+        return ResponseEntity.ok(facultyService.createFaculty(faculty));
+    }
+    @GetMapping("/getAllFaculty")
+    public ResponseEntity<List<Faculty>> getAllFaculty(){
+        return ResponseEntity.ok(facultyService.getAllFaculty());
+    }
+    @GetMapping
     @PostMapping("/sendMail")
     public String sendMail(@RequestParam String TO,@RequestParam String msg) throws MessagingException {
             emailService.sendMail(TO,msg);
