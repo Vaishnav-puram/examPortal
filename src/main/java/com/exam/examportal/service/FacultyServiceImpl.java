@@ -7,6 +7,8 @@ import com.exam.examportal.repo.FacultyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FacultyServiceImpl implements FacultyService{
     @Autowired
@@ -37,5 +39,10 @@ public class FacultyServiceImpl implements FacultyService{
         System.out.println("Faculty Logged in successful");
         return f;
 
+    }
+
+    @Override
+    public List<Faculty> getAllFaculty() {
+        return facultyRepo.findAll();
     }
 }
