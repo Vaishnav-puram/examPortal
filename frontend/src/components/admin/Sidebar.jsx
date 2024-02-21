@@ -8,11 +8,13 @@ import { NavLink} from "react-router-dom";
 import { BiCategory } from "react-icons/bi";
 import { BsBoxes } from "react-icons/bs";
 import { BsBookHalf } from "react-icons/bs";
+import { IoMdPersonAdd } from "react-icons/io";
+import { FaUsers } from "react-icons/fa";
 function Sidebar() {
     return (
         <>
             <div style={{height: '90vh',position:'absolute'}}>
-                <CDBSidebar maxWidth='210px' textColor="#fff" backgroundColor="#333">
+                <CDBSidebar maxWidth='260px' textColor="#fff" backgroundColor="#333">
                     <CDBSidebarContent >
                         <CDBSidebarMenu>
                             <NavLink to={'/admin-dashboard/admin-home'} activeClassName="activeClicked">
@@ -29,6 +31,12 @@ function Sidebar() {
                             </NavLink>
                             <NavLink to={'/admin-dashboard/getQuizzes'} activeClassName="activeClicked">
                                 <CDBSidebarMenuItem><BsBoxes /> Quizzes</CDBSidebarMenuItem>
+                            </NavLink>
+                            <NavLink to={'/admin-dashboard/createFaculty'} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem><IoMdPersonAdd /> Create Faculty</CDBSidebarMenuItem>
+                            </NavLink>
+                            <NavLink to={'/admin-dashboard/getAllFaculty'} activeClassName="activeClicked">
+                                <CDBSidebarMenuItem><FaUsers /> Display Faculties</CDBSidebarMenuItem>
                             </NavLink>
                         </CDBSidebarMenu>
                         
