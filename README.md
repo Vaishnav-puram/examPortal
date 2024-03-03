@@ -24,7 +24,7 @@ To install and run the Exam Portal locally, follow these steps:
 2. Set up the MySQL database and configure the application properties accordingly.
 3. Navigate to the backend directory and run the Spring Boot application.
 4. Navigate to the frontend directory and install dependencies using `npm install`.
-5. Start the frontend server using `npm start`.
+5. Start the frontend server using `npm run dev`.
 
 ## 💡 Usage
 
